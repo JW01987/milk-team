@@ -27,7 +27,7 @@ async function commentsListing() {
                             <div class="card-body">
                               <blockquote class="blockquote mb-0">
                                 <p>${comment}</p>
-                                <footer class="blockquote-footer" id="footer">${nick_name} (${upload_time}) 
+                                <footer class="blockquote-footer" id="footer">${nick_name} (${dateFormatter(upload_time)}) 
                                   <a href="#">수정</a>
                                   <a href="#">삭제</a>
                                 </footer>
@@ -96,4 +96,16 @@ function inputChecker(target, content) {
   } else {
     return content
   };
+};
+
+function dateFormatter(dateString) {
+  const inputDate = new Date(dateString);
+  const year = inputDate.getFullYear();
+  const month = String(inputDate.getMonth() + 1).padStart(2, "0");
+  const day = String(inputDate.getDate()).padStart(2, "0");
+  const hours = String(inputDate.getHours()).padStart(2, "0");
+  const minutes = String(inputDate.getMinutes()).padStart(2, "0");
+  const seconds = String(inputDate.getSeconds()).padStart(2, "0");
+  const outputDateString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  return outputDateString
 };
