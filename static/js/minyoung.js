@@ -27,7 +27,7 @@ async function commentsListing() {
                             <div class="card-body">
                               <blockquote class="blockquote mb-0">
                                 <p>${comment}</p>
-                                <footer class="blockquote-footer" id="footer">${nick_name} (${upload_time}) 
+                                <footer class="blockquote-footer" id="footer">${nick_name} (${dateFormatter(upload_time)}) 
                                   <a href="#">수정</a>
                                   <a href="#">삭제</a>
                                 </footer>
@@ -44,7 +44,7 @@ async function commentsListing() {
 
   if (page > page_set) {
     let previous = `<li class="page-item">
-                      <a class="page-link" href="/pmy?page=${start_page - page_set}&limit=${limit}" aria-label="Previous">
+                      <a class="page-link" href="/minyoung?page=${start_page - page_set}&limit=${limit}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                       </a>
                     </li>`
@@ -54,7 +54,7 @@ async function commentsListing() {
   let page_list;
   for (let i = start_page; i <= end_page; i++) {
     let color 
-    let url = `/pmy?page=${i}&limit=${limit}`
+    let url = `/minyoung?page=${i}&limit=${limit}`
     if (i > total_page) {
       break
     } else {
@@ -68,7 +68,7 @@ async function commentsListing() {
   
   if ((page <= total_page - (total_page % page_set)) && (total_page > page_set)) {
     let next = `<li class="page-item">
-                  <a class="page-link" href="/pmy?page=${start_page + page_set}&limit=${limit}" aria-label="Next">
+                  <a class="page-link" href="/minyoung?page=${start_page + page_set}&limit=${limit}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
                 </li>`
@@ -96,4 +96,16 @@ function inputChecker(target, content) {
   } else {
     return content
   };
+};
+
+function dateFormatter(dateString) {
+  const inputDate = new Date(dateString);
+  const year = inputDate.getFullYear();
+  const month = String(inputDate.getMonth() + 1).padStart(2, "0");
+  const day = String(inputDate.getDate()).padStart(2, "0");
+  const hours = String(inputDate.getHours()).padStart(2, "0");
+  const minutes = String(inputDate.getMinutes()).padStart(2, "0");
+  const seconds = String(inputDate.getSeconds()).padStart(2, "0");
+  const outputDateString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  return outputDateString
 };

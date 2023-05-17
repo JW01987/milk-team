@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from pymongo import MongoClient, DESCENDING
+from pymongo import MongoClient
 import uuid
 import certifi
 from bson.objectid import ObjectId
@@ -116,9 +116,6 @@ def post_comments():
     # 현재시각을 변수로 지정합니다.
     # 저는 코멘트 POST요청을 받으면 현재시각을 생성하여 데이터베이스에 넣도록 했습니다.
     now = datetime.now()  # 본인의 PC 기준 현재시각을 출력합니다.
-    now = datetime.strftime(
-        now, "%Y-%m-%d %H:%M:%S"
-    )  # 현재시각의 형식을 (2022-5-17 14:30:32)의 형태로 변환합니다.
 
     # 개인 페이지에 대한 댓글 정보
     post = {
@@ -163,8 +160,8 @@ def get_comments():
         db.comments.find({"member_id": 2}, {"_id": False})
         .skip((page - 1) * limit)
         .limit(limit)
-        .sort("upload_time", DESCENDING)
     )
+
     # 페이지네이션 구현에 필요한 정보를 프론트에 전달합니다.
     return jsonify(
         {
