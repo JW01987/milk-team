@@ -1,14 +1,18 @@
 * {
-  font-family: 'Nanum Gothic Coding', monospace;
+  font-family: "Nanum Gothic", sans-serif;
+  font-family: "Noto Serif KR", serif;
 }
 
 .header {
   width: 100%;
-  background-image: linear-gradient(0deg,
+  height: 200px;
+  background-image: linear-gradient(
+      0deg,
       rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)),
-    url("../images/index_header.jpeg");
-  background-position: bottom;
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("https://images.everydayhealth.com/images/healthy-plant-based-milks-00-intro-alt-1440x810.jpg?w=720");
+  background-position: center;
   background-size: cover;
   color: white;
 
@@ -19,7 +23,7 @@
 
   /* padding-left: 50px; */
   padding: 50px 20px 50px 20px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .body-container {
@@ -38,12 +42,12 @@
 
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 }
 
 .introduce > img {
   /* width: 40%; */
-  margin-right: 20px;
+  margin-right: 30px;
   border-radius: 8px;
 }
 
@@ -54,25 +58,25 @@
 
 .teaminfo h3 {
   padding-top: 30px;
+  margin-bottom: 10px;
 }
 
 .teaminfo p {
-  padding-top: 10px;
-  white-space: pre-wrap;
+  text-align: center;
+  padding: 5px;
 }
 
 .text-area {
-  border-width: 2px;
-  border-style: solid;
-  border-color: red;
+  box-shadow: 0 0 5px #333;
+  border-radius: 3px;
+  padding: 20px;
+  text-align: center;
 }
 
-.text-area.content {
+.content {
   height: 40%;
-  overflow: auto;
 }
-
-.text-area.rules {
+.rules {
   height: 30%;
   overflow: auto;
 }
@@ -81,10 +85,18 @@
   margin-bottom: 50px;
 }
 
-.subtitle h3, .subtitle p{
+.subtitle h3,
+.subtitle p {
   display: inline;
 }
-
+.modalBtn {
+  margin-top: 10px;
+}
+.hr {
+  border: 1px solid #91acbe;
+  width: 70%;
+  margin: 0 auto 80px auto;
+}
 .team-container {
   width: 990px;
   text-align: center;
@@ -93,11 +105,10 @@
 }
 
 .team {
-  background-color : white;
+  background-color: white;
   width: 300px;
   margin-left: auto;
   margin-right: auto;
-  border-radius: 10px;
   overflow: hidden;
   margin-bottom: 50px;
   display: inline-block;
@@ -110,7 +121,6 @@
 
 .team img {
   height: 400px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
   margin-bottom: 10px;
 }

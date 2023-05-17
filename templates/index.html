@@ -1,110 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-
-  <link href="../static/css/index.css" rel="stylesheet">
-  <script src="../static/js/index.js"></script>
-
-  <title>Team 우유먹고 싶다</title>
-</head>
-    </style>
-    <script>
-      // $(document).ready(function () {
-      //   test();
-      // });
-      // function test() {
-      //   let formData = new FormData();
-      //   formData.append("test", "test");
-
-      //   fetch("/test", { method: "POST", body: formData })
-      //     .then((res) => res.json())
-      //     .then((data) => {
-      //       alert(data["msg"]);
-      //     });
-      // }
-    </script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../static/css/index.css" rel="stylesheet" />
+    <title>Team 우유먹고 싶다</title>
   </head>
-<body>
-  <div class="header">
-    <p>우유에 목마른 사람들</p>
-    <h1 id="title">우유 먹고 싶다</h1>
-  </div>
-  <div class="body-container">
-    <div class="introduce">
-      <img src="../static/images/no_img.png">
-      <div class="teaminfo">
-        <h3>팀 소개</h3>
-        <div class="text-area content">
-          <p>안녕하세요 "우유먹고싶다" 팀입니다. 잘 부탁드립니다!부탁드립니다!부탁드립니다!부탁드립니다!
-            지금 내용 채워넣을 때가 아닙니다.
-            프로젝트까지 얼마 안남았다구요!
-            아이고 바쁘다 바뻐!아이고 바쁘다
-          </p>
-        </div>
-        <h3>팀 규칙</h3>
-        <div class="text-area rules">
-          <p>안녕하세요 우유 먹고 싶다 팀 규칙입니다.
-            잘 부탁드립니다!
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="subtitle">
-      <h3>멋진 팀원들</h3>
-      <p>과 최애 우유</p>
-    </div>
-    <div class="team-container">
-      <div class="team">
-        <img src="../static/images/no_img.png" width="300px" height="200px">
-        <div class="info">
-          <a href="#">이름</a>
-        </div>
-      </div>
-
-      <div class="team">
-        <img src="../static/images/no_img.png" width="300px" height="200px">
-        <div class="info">
-          <a href="#">이름</a>
-        </div>
-      </div>
-
-      <div class="team">
-        <img src="../static/images/no_img.png" width="300px" height="200px">
-        <div class="info">
-          <a href="#">이름</a>
-        </div>
-      </div>
-
-      <div class="team">
-        <img src="../static/images/no_img.png" width="300px" height="200px">
-        <div class="info">
-          <a href="#">이름</a>
-        </div>
-      </div>
-
-      <div class="team">
-        <img src="../static/images/no_img.png" width="300px" height="200px">
-        <div class="info">
-          <a href="#">이름</a>
+  <body>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">감상평 남기기</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control nameinput"
+                id="floatingInput"
+                placeholder="name@example.com"
+              />
+              <label for="floatingInput">이름</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control imginput"
+                id="floatingInput"
+                placeholder="name@example.com"
+              />
+              <label for="floatingInput">이미지 주소</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              닫기
+            </button>
+            <button type="button" class="btn btn-primary" id="submit">
+              등록하기
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+    <div class="header">
+      <p>우유에 목마른 사람들</p>
+      <h1 id="title">우유 먹고 싶다</h1>
+    </div>
+    <div class="body-container">
+      <div class="introduce">
+        <img src="../static/images/no_img.png" />
+        <div class="teaminfo">
+          <h3>팀 소개</h3>
+          <div class="text-area content">
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              Excepturi neque facere voluptas ipsam voluptates porro possimus
+              perferendis molestias quia minus, cumque autem est qui culpa
+              reiciendis tempore beatae quasi nesciunt!
+            </p>
+          </div>
+          <h3>팀 규칙</h3>
+          <div class="text-area rules">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
+              reprehenderit, nobis laborum possimus corporis illum labore cum
+              sit nisi, corrupti earum repellendus quod assumenda iste libero
+              sint deserunt laboriosam adipisci!
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr class="hr" />
+      <div class="subtitle">
+        <div>
+          <h3>멋진 팀원들</h3>
+          <p>과 최애 우유</p>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-dark modalBtn"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          팀원추가하기
+        </button>
+      </div>
 
+      <div class="team-container">
+        <div class="team">
+          <img src="../static/images/no_img.png" width="300px" height="200px" />
+          <div class="info">
+            <a href="#">이름</a>
+          </div>
+        </div>
+
+        <div class="team">
+          <img src="../static/images/no_img.png" width="300px" height="200px" />
+          <div class="info">
+            <a href="#">이름</a>
+          </div>
+        </div>
+
+        <div class="team">
+          <img src="../static/images/no_img.png" width="300px" height="200px" />
+          <div class="info">
+            <a href="#">이름</a>
+          </div>
+        </div>
+
+        <div class="team">
+          <img src="../static/images/no_img.png" width="300px" height="200px" />
+          <div class="info">
+            <a href="#">이름</a>
+          </div>
+        </div>
+
+        <div class="team">
+          <img src="../static/images/no_img.png" width="300px" height="200px" />
+          <div class="info">
+            <a href="#">이름</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.onload = function () {
+        $(document).ready(function show_team() {
+          fetch("/memberlist", {
+            headers: { "Content-Type": "application/json" },
+            method: "GET",
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              $(".team-container").empty();
+              data.forEach((a) => {
+                let name = a["name"];
+                let img = a["img"];
+                let temp_html = `<div class="team">
+              <img src="${img}" width="300px" height="200px">
+              <div class="info">
+                <a href="#">${name}</a>
+              </div>
+            </div>`;
+                $(".team-container").append(temp_html);
+              });
+            });
+        });
+        const submit = document.querySelector("#submit");
+        const nameInput = document.querySelector(".nameinput");
+        const imgInput = document.querySelector(".imginput");
+
+        submit.addEventListener("click", (e) => {
+          let data = {
+            name: nameInput.value,
+            img: imgInput.value,
+          };
+          fetch("/members", {
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+            body: JSON.stringify(data),
+          }).then((res) => {
+            if (res.status == 204) window.location.reload();
+            else alert("에러발생");
+          });
+        });
+      };
+    </script>
+  </body>
 </html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <link href="../static/css/minyoung.css" rel="stylesheet">
+  <script src="../static/js/minyoung.js"></script>
+
+  <title>My Introduction</title>
+</head>
+
+<body>
+  <div class="mypic">
+    <h1 id="title">박민영</h1>
+  </div>
+  <div class="body-container">
+    <div class="introduce">
+      <img src="../static/images/no_img.png">
+      <div class="myinfo">
+        <h3>자기 소개</h3>
+        <p>안녕하세요 박민영이라고 합니다.
+잘 부탁드립니다!
+'비밀번호'는 진지하게 적지 마세요! 그대로 DB에 저장됩니다.
+'수정', '삭제' 기능은 무늬만 있을 뿐입니다.
+짧은 시간 프로젝트 모두 고생하셨습니다.
+아이고 바쁘다 바뻐!
+        </p>
+      </div>
+    </div>
+
+    <div class="mypost" id="post-box">
+      <div class="input-group mb-3">
+        <input type="text" id="nickname" class="form-control" placeholder="닉네임 (최대 10자)" aria-label="nickname"
+          maxlength="10">
+        <input type="password" id="password" class="form-control" placeholder="비밀번호" aria-label="password">
+      </div>
+
+      <div class="input-group">
+        <textarea id="comment" class="form-control" placeholder="코멘트를 남겨주세요. (최대 400자)" aria-label="With textarea"
+          maxlength="400"></textarea>
+      </div>
+      <div class="mybtns">
+        <button onclick="posting()" type="button" class="btn btn-dark">등록</button>
+      </div>
+    </div>
+
+    <div class="mycards" id="comment-list">
+      <div class="card">
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p>코멘트 내용</p>
+            <footer class="blockquote-footer" id="footer">닉네임 (2027-12-14 13:24:20)
+              <a href="#">수정</a>
+              <a href="#">삭제</a>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+    <div class="page-container">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination"></ul>
+      </nav>
+    </div>
+  </div>
+</body>
+
+</html>
