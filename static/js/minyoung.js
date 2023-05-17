@@ -44,7 +44,7 @@ async function commentsListing() {
 
   if (page > page_set) {
     let previous = `<li class="page-item">
-                      <a class="page-link" href="/pmy?page=${start_page - page_set}&limit=${limit}" aria-label="Previous">
+                      <a class="page-link" href="/minyoung?page=${start_page - page_set}&limit=${limit}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                       </a>
                     </li>`
@@ -54,7 +54,7 @@ async function commentsListing() {
   let page_list;
   for (let i = start_page; i <= end_page; i++) {
     let color 
-    let url = `/pmy?page=${i}&limit=${limit}`
+    let url = `/minyoung?page=${i}&limit=${limit}`
     if (i > total_page) {
       break
     } else {
@@ -68,7 +68,7 @@ async function commentsListing() {
   
   if ((page <= total_page - (total_page % page_set)) && (total_page > page_set)) {
     let next = `<li class="page-item">
-                  <a class="page-link" href="/members/2/comments?page=${start_page + page_set}&limit=${limit}" aria-label="Next">
+                  <a class="page-link" href="/minyoung?page=${start_page + page_set}&limit=${limit}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
                 </li>`
