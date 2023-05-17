@@ -119,9 +119,7 @@
         flex-direction: row;
       }
     </style>
-    <script>
-      window.onload = function () {};
-    </script>
+
   </head>
   <body>
     <div
@@ -146,7 +144,7 @@
             <div class="form-floating mb-3">
               <input
                 type="email"
-                class="form-control"
+                class="form-control nameinput"
                 id="floatingInput"
                 placeholder="name@example.com"
               />
@@ -154,7 +152,7 @@
             </div>
             <div class="form-floating">
               <textarea
-                class="form-control"
+                class="form-control commentinput"
                 placeholder="Leave a comment here"
                 id="floatingTextarea2"
                 style="height: 100px"
@@ -170,7 +168,7 @@
             >
               닫기
             </button>
-            <button type="button" class="btn btn-primary">등록하기</button>
+            <button type="button" class="btn btn-primary" id="submit">등록하기</button>
           </div>
         </div>
       </div>
@@ -221,5 +219,50 @@
       <h3>이름</h3>
     </div>
   </div>
+  <script>
+    window.onload = function () {
+      const submit = document.querySelector("#submit")
+      const nameInput = document.querySelector(".nameinput")
+      const commentInput = document.querySelector(".commentinput")
+
+      submit.addEventListener("click", (e)=>{
+        let formData = new FormData();
+        formData.append("name", nameInput.value);
+        formData.append("comment", commentInput.value);
+        formData.append("memberid", 4);
+        fetch("/comments", 
+        {
+        method: "POST",
+        body: formData
+        }).then((res) => {
+          if(res.status ==204) window.location.reload()
+          else alert('에러발생')
+      })
+      })
+
+      $(document).ready(function () {
+        function show_comment() {
+        fetch('/members/comment?memberid=4').then((res) => res.json()).then((data) => {
+            let rows = data['result']
+		        $(".comment-list").empty()
+            rows.forEach((a) => {
+              let name = a['name']
+              let comment = a['comment']
+
+              let temp_html = 
+              ` <div class="comment">
+                <p>
+                  ${comment}
+                </p>
+                <h3>${name}</h3>
+              </div>`
+              $("#comment-list").append(temp_html)
+            })
+          })
+      }
+      });
+
+    };
+  </script>
   </body>
 </html>

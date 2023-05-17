@@ -49,6 +49,7 @@ def memberlist():
     return jsonify(memberlist)
 
 # 채원님 이거 참고하셔서 만들면 금방 하실 수 있어요!!
+# request.args.get('memberid') <- 쿼리 스트링에서 멤버 아이디를 추출하는 방법
 # @app.route("/del", methods=["DELETE"])
 # def movie_del():
 #     allmovie = request.get_json()
