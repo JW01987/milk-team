@@ -68,7 +68,7 @@ async function commentsListing() {
   
   if ((page <= total_page - (total_page % page_set)) && (total_page > page_set)) {
     let next = `<li class="page-item">
-                  <a class="page-link" href="/pmy?page=${start_page + page_set}&limit=${limit}" aria-label="Next">
+                  <a class="page-link" href="/members/2/comments?page=${start_page + page_set}&limit=${limit}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
                 </li>`
