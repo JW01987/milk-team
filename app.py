@@ -134,7 +134,7 @@ def post_comments():
 
 
 # 개인 페이지 코멘트 GET API 입니다.
-@app.route("members/2/comments", methods=["GET"])
+@app.route("/members/2/comments", methods=["GET"])
 def get_comments():
     """페이지네이션을 구현합니다.
     - 쿼리로 page와 limit에 대한 정보를 받습니다.
