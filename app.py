@@ -69,10 +69,19 @@ def member_update():
     name_receive = request.get_json()["name"]
     img_receive = request.get_json()["img"]
     comment_receive = request.get_json()["comment"]
+    member_id = request.get_json()["memberid"]
+
     result = db.team.update_one(
-        {"name": name_receive},
-        {"$set": {"img": img_receive, "comment": comment_receive}},
+        {"id": member_id},
+        {
+            "$set": {
+                "name": name_receive,
+                "img": img_receive,
+                "comment": comment_receive,
+            }
+        },
     )
+    print(result)
     return "", 204
 
 
