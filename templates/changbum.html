@@ -113,7 +113,7 @@
         formData.append("password", password);
         formData.append("comment_give", comment);
         
-        fetch("/comments", { method: "POST", body: formData })
+        fetch("/members/1/comments", { method: "POST", body: formData })
           .then((res) => res.json())
           .then((data) => {
             alert(data["msg"]);

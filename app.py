@@ -32,7 +32,7 @@ def jowon():
 
 @app.route("/changbum")
 def userhome():
-    return render_template("personal_page.html")
+    return render_template("changbum.html")
 
 
 @app.route("/minyoung")
@@ -101,7 +101,7 @@ def member_del():
 # ======여기부터는 개인페이지 API입니다===========
 
 
-@app.route("/comments", methods=["POST"])
+@app.route("/members/1/comments", methods=["POST"])
 def guestbook_post():
     name_receive = request.form["name_give"]
     comment_receive = request.form["comment_give"]
