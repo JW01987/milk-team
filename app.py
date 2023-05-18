@@ -114,7 +114,7 @@ def guestbook_post():
     return jsonify({"msg": "방명록 작성 완료!"})
 
 
-@app.route("/members/comments/1", methods=["GET"])
+@app.route("/members/1/comments", methods=["GET"])
 def guestbook_get():
     all_comments = list(db.comments.find({"member_id": 1}, {"_id": False}))
     all_id = list(db.comments.find({}, {"_id": ObjectId()}))

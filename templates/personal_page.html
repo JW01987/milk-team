@@ -122,7 +122,7 @@
       }
 
       function show_comment() {
-        fetch("/members/comments/1")
+        fetch("/members/1/comments")
           .then((res) => res.json())
           .then((data) => {
             let rows = data["result"];
