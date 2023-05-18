@@ -121,6 +121,20 @@
           });
       }
 
+      function Delete_comment() {
+        let id = $("#ObjectId").text();
+        let formData = new FormData();
+        console.log(id)
+        formData.append("commentid_give", id);
+        formData.append("memberid_give", 1);
+        
+        fetch(`/comments/${id}`, { method: "DELETE", body: formData })
+          .then((res) => res.json())
+          .then((data) => {
+            window.location.reload();
+          });
+      }
+
       function show_comment() {
         fetch("/members/1/comments")
           .then((res) => res.json())

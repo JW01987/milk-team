@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient, DESCENDING
 import uuid
+from bson.objectid import ObjectId
 import certifi
 from datetime import datetime, timezone, timedelta
 
@@ -144,6 +145,14 @@ def post_comments_with_id(member_id):
     db.comments.insert_one(data)
 
     return jsonify({"msg": "방명록 작성 완료!"})
+
+@app.route("/comments/<commentid>", methods=["DELETE"])
+def comments_del(commentid):
+    print(commentid)
+    member_id = request.args.get("memberid_give")
+    comments_id = request.args.get("commentid_give")
+    db.comments.delete_one({"_id": ObjectId(commentid)})
+    return "", 204
 
 
 # 개인 페이지 코멘트 POST API 입니다.
