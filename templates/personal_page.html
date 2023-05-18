@@ -86,6 +86,9 @@
         margin-left: auto;
         margin-right: auto;
       }
+      #ObjectId {
+      display: none;
+      }
     </style>
     <script>
       $(document).ready(function () {
@@ -101,28 +104,16 @@
           });
       }
       function save_comment() {
-        let name = $("#name").val();
+        let name = $("#nickname").val();
+        let password = $("#password").val();
         let comment = $("#comment").val();
         let formData = new FormData();
+
         formData.append("name_give", name);
+        formData.append("password", password);
         formData.append("comment_give", comment);
-
-        fetch("/comment", { method: "POST", body: formData })
-          .then((res) => res.json())
-          .then((data) => {
-            alert(data["msg"]);
-            window.location.reload();
-          });
-      }
-
-      function Delete_comment() {
-        let name = $("#name").val();
-        let comment = $("#comment").val();
-        let formData = new FormData();
-        formData.append("name_give", name);
-        formData.append("comment_give", comment);
-
-        fetch("/comment", { method: "POST", body: formData })
+        
+        fetch("/comments", { method: "POST", body: formData })
           .then((res) => res.json())
           .then((data) => {
             alert(data["msg"]);
@@ -131,7 +122,7 @@
       }
 
       function show_comment() {
-        fetch("/all_comment")
+        fetch("/members/comments/1")
           .then((res) => res.json())
           .then((data) => {
             let rows = data["result"];
@@ -139,11 +130,10 @@
             $("#comment-list").empty();
             let index = 0;
             rows.forEach((a) => {
-              let name = a["name"];
+              let name = a["nick_name"];
               let comment = a["comment"];
               let id = rowsid[index];
-              index++;
-              console.log(id);
+              index++
               let temp_html = `<div class="card">
                             <div class="card-body">
                                 <blockquote class="blockquote mb-0">
@@ -151,7 +141,7 @@
                                     <p>${comment}</p>
                                     <footer class="blockquote-footer">${name}</footer>
                                 </blockquote>
-                                <button onclick="delete_comment()" type="button" class="btn btn-dark">
+                                <button onclick="Delete_comment()" type="button" class="btn btn-dark">
                                   삭제
                                 </button>
                             </div>
@@ -183,8 +173,12 @@
     </div>
     <div class="mypost">
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="name" placeholder="url" />
+        <input type="text" class="form-control" id="nickname" placeholder="url" />
         <label for="floatingInput">닉네임</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="password" placeholder="url" />
+        <label for="floatingInput">비밀번호</label>
       </div>
       <div class="form-floating">
         <textarea
