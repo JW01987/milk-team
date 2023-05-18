@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import uuid
 import certifi
 from bson.objectid import ObjectId
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 ca = certifi.where()
 client = MongoClient(
@@ -141,7 +141,8 @@ def post_comments():
 
     # 현재시각을 변수로 지정합니다.
     # 저는 코멘트 POST요청을 받으면 현재시각을 생성하여 데이터베이스에 넣도록 했습니다.
-    now = datetime.now()  # 본인의 PC 기준 현재시각을 출력합니다.
+    kst = timezone(timedelta(hours=9))
+    now = datetime.now(tz=kst)  # 한국 기준 현재시각을 출력합니다.
 
     # 개인 페이지에 대한 댓글 정보
     post = {
