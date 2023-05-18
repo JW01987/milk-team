@@ -18,6 +18,7 @@ async function commentsListing() {
   let { count, start_page, end_page, page_set, comments } = data
 
   $('#comment-list').empty()
+  $('.title-list').text(`📂 리스트 (${count})`)
   if (comments.length === 0) {
     $('#comment-list').append(`<p style="text-align: center; font-size: 20px;">아직 댓글이 없어요...</p>`)
   } else {
