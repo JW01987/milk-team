@@ -232,7 +232,6 @@
           rows.forEach((a) => {
             let name = a['nick_name']
             let comment = a['comment']
-            console.log(comment)
             let temp_html = 
             ` <div class="comment">
               <p>
@@ -251,9 +250,9 @@
 
       submit.addEventListener("click", (e)=>{
         let formData = new FormData();
-        formData.append("name", nameInput.value);
+        formData.append("nick_name", nameInput.value);
         formData.append("comment", commentInput.value);
-        formData.append("memberid", 4);
+        formData.append("member_id", 4);
         fetch("/members/4/comments", 
         {
         method: "POST",
