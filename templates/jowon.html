@@ -116,11 +116,9 @@
         margin-top: 20px;
       }
       .comment{
-        width: 95%;
-        max-width: 800px;
         margin: 10px auto 20px auto;
-        padding: 40px 20px 10px 20px;
-        text-align: center;
+        /* padding: 40px 20px 10px 20px; */
+      
       }
       .test{
         display: flex;
@@ -212,6 +210,27 @@
 
   </div>
   <script>
+    function show_comment() {
+      fetch('/members/4/comments').then((res) => res.json()).then((data) => {
+          let rows = data['result']
+          $(".comment-list").empty()
+          rows.forEach((a) => {
+            let name = a['nick_name']
+            let comment = a['comment']
+            let temp_html = 
+            `<div class="card comment" style="width: 25rem;">
+                <div class="card-body">
+                  <h5 class="card-title">${name}</h5>
+                  <p class="card-text">${comment}</p>
+                  <button type="button" class="btn btn-outline-danger btn-sm">
+                    삭제
+                  </button>
+                </div>
+              </div>`
+            $(".comment-list").append(temp_html)
+          })
+        })  
+    }
     window.onload = function () {
       const submit = document.querySelector("#submit")
       const nameInput = document.querySelector(".nameinput")
@@ -219,41 +238,22 @@
 
       submit.addEventListener("click", (e)=>{
         let formData = new FormData();
-        formData.append("name", nameInput.value);
+        formData.append("nick_name", nameInput.value);
         formData.append("comment", commentInput.value);
-        formData.append("memberid", 4);
-        fetch("/comments", 
+        formData.append("member_id", 4);
+        fetch("/members/4/comments", 
         {
         method: "POST",
         body: formData
         }).then((res) => {
-          if(res.status ==204) window.location.reload()
+          if (res.status == 200) window.location.reload()
           else alert('에러발생')
       })
       })
 
       $(document).ready(function () {
-        function show_comment() {
-        fetch('/members/comment?memberid=4').then((res) => res.json()).then((data) => {
-            let rows = data['result']
-		        $(".comment-list").empty()
-            rows.forEach((a) => {
-              let name = a['name']
-              let comment = a['comment']
-
-              let temp_html = 
-              ` <div class="comment">
-                <p>
-                  ${comment}
-                </p>
-                <h3>${name}</h3>
-              </div>`
-              $("#comment-list").append(temp_html)
-            })
-          })
-      }
+        show_comment()
       });
-
     };
   </script>
   </body>

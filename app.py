@@ -32,7 +32,7 @@ def jowon():
 
 @app.route("/changbum")
 def userhome():
-    return render_template("personal_page.html")
+    return render_template("changbum.html")
 
 
 @app.route("/minyoung")
@@ -42,10 +42,12 @@ def minyoung():
 
 # ============여기부터는 메인 페이지 api 구현하는 곳입니다==========
 
+
 @app.route("/memberlist", methods=["GET"])
 def getmember():
     memberlist = list(db.team.find({}, {"_id": 0}))
     return jsonify(memberlist)
+
 
 @app.route("/members", methods=["POST"])
 def members():
@@ -59,7 +61,7 @@ def members():
 
 @app.route("/member/update", methods=["PUT"])
 def member_update():
-    member_id = request.get_json()["memberid"]
+    #member_id = request.get_json()["memberid"]
     name_receive = request.get_json()["name"]
     img_receive = request.get_json()["img"]
     comment_receive = request.get_json()["comment"]
@@ -67,45 +69,70 @@ def member_update():
     result = db.team.update_one({"name":name_receive},{"$set":{"img":img_receive,"comment":comment_receive}})
     return "", 204
 
-
 @app.route("/member/delete", methods=["DELETE"])
 def member_del():
-    member_id = request.args.get('memberid')
-    db.team.delete_one({'id':member_id})
-    return "", 204 
-
-
+    member_id = request.args.get("memberid")
+    db.team.delete_one({"id": member_id})
+    return "", 204
 
 
 # ======여기부터는 개인페이지 API입니다===========
 
 
-@app.route("/comments", methods=["POST"])
-def guestbook_post():
-    name_receive = request.form["name_give"]
-    comment_receive = request.form["comment_give"]
+@app.route("/members/<int:member_id>/comments", methods=["GET"])
+def get_comments_with_id(member_id):
+    if member_id != 2:
+        comments = list(db.comments.find({"member_id": member_id}))
+        for obj in comments:
+            obj["_id"] = str(obj["_id"])
 
-    doc = {"member_id": 1,
-            "nick_name": name_receive,
-            "comment": comment_receive}
+        return jsonify({"result": comments})
 
-    db.comments.insert_one(doc)
-    return jsonify({"msg": "방명록 작성 완료!"})
+    elif member_id == 2:
+        page = int(request.args.get("page"))
+        limit = int(request.args.get("limit"))
+        limit = limit if limit <= 20 else 20  # limit는 20 이상을 부여할 수 없습니다.
+
+        count = db.comments.count_documents({})
+
+        # 페이지네이션 작동에 사용될 변수입니다.
+        # 만약 현재 3페이지에 머물고 있다면 페이지네이션은 <1 2 3 4 5>까지만 보여집니다.
+        # 만약 7페이지에 머물고 있다면 페이지네이션은 <6 7 8 9 10>까지만 보여집니다.
+        page_set = 5  # 페이지네이션의 페이지 숫자를 5개 단위로 보여지도록 합니다.
+        page_group_num = (page - 1) // page_set
+        start_page = page_group_num * page_set + 1
+        end_page = (page_group_num + 1) * page_set
+
+        # MongoDB에서 코멘트 데이터 가져오기
+        # skip과 limit 메소드를 사용하면 가져올 데이터의 범위를 설정할 수 있습니다.
+        comments = list(
+            db.comments.find({"member_id": 2}, {"_id": False})
+            .skip((page - 1) * limit)
+            .limit(limit)
+        )
+
+        # 페이지네이션 구현에 필요한 정보를 프론트에 전달합니다.
+        return jsonify(
+            {
+                "count": count,
+                "start_page": start_page,
+                "end_page": end_page,
+                "page_set": page_set,
+                "comments": comments,
+            }
+        )
 
 
-@app.route("/members/1/comments", methods=["GET"])
-def guestbook_get():
-    all_comments = list(db.comments.find({"member_id": 1}, {"_id": False}))
-    all_id = list(db.comments.find({}, {"_id": ObjectId()}))
-    return jsonify({"result": all_comments, "resultid": obejectInCoder(all_id)})
+@app.route("/members/<int:member_id>/comments", methods=["POST"])
+def post_comments_with_id(member_id):
+    if member_id != 2:
+        nick_name = request.form["nick_name"]
+        comment = request.form["comment"]
 
+        post = {"member_id": member_id, "nick_name": nick_name, "comment": comment}
+        db.comments.insert_one(post)
 
-def obejectInCoder(list):
-    results = []
-    for document in list:
-        document["_id"] = str(document["_id"])
-        results.append(document)
-    return results
+        return jsonify({"msg": "방명록 작성 완료!"})
 
 
 # 개인 페이지 코멘트 POST API 입니다.
@@ -139,46 +166,46 @@ def post_comments():
     return jsonify({"msg": "등록을 완료했습니다."})
 
 
-# 개인 페이지 코멘트 GET API 입니다.
-@app.route("/members/2/comments", methods=["GET"])
-def get_comments():
-    """페이지네이션을 구현합니다.
-    - 쿼리로 page와 limit에 대한 정보를 받습니다.
-    - page는 페이지네이션에서 현재 페이지를 의미합니다.
-    - limit는 한 페이지당 보여줄 코멘트 수를 의미합니다.
-    """
-    page = int(request.args.get("page"))
-    limit = int(request.args.get("limit"))
-    limit = limit if limit <= 20 else 20  # limit는 20 이상을 부여할 수 없습니다.
+# # 개인 페이지 코멘트 GET API 입니다.
+# @app.route("/members/2/comments", methods=["GET"])
+# def get_comments():
+#     """페이지네이션을 구현합니다.
+#     - 쿼리로 page와 limit에 대한 정보를 받습니다.
+#     - page는 페이지네이션에서 현재 페이지를 의미합니다.
+#     - limit는 한 페이지당 보여줄 코멘트 수를 의미합니다.
+#     """
+#     page = int(request.args.get("page"))
+#     limit = int(request.args.get("limit"))
+#     limit = limit if limit <= 20 else 20  # limit는 20 이상을 부여할 수 없습니다.
 
-    count = db.comments.count_documents({})
+#     count = db.comments.count_documents({})
 
-    # 페이지네이션 작동에 사용될 변수입니다.
-    # 만약 현재 3페이지에 머물고 있다면 페이지네이션은 <1 2 3 4 5>까지만 보여집니다.
-    # 만약 7페이지에 머물고 있다면 페이지네이션은 <6 7 8 9 10>까지만 보여집니다.
-    page_set = 5  # 페이지네이션의 페이지 숫자를 5개 단위로 보여지도록 합니다.
-    page_group_num = (page - 1) // page_set
-    start_page = page_group_num * page_set + 1
-    end_page = (page_group_num + 1) * page_set
+#     # 페이지네이션 작동에 사용될 변수입니다.
+#     # 만약 현재 3페이지에 머물고 있다면 페이지네이션은 <1 2 3 4 5>까지만 보여집니다.
+#     # 만약 7페이지에 머물고 있다면 페이지네이션은 <6 7 8 9 10>까지만 보여집니다.
+#     page_set = 5  # 페이지네이션의 페이지 숫자를 5개 단위로 보여지도록 합니다.
+#     page_group_num = (page - 1) // page_set
+#     start_page = page_group_num * page_set + 1
+#     end_page = (page_group_num + 1) * page_set
 
-    # MongoDB에서 코멘트 데이터 가져오기
-    # skip과 limit 메소드를 사용하면 가져올 데이터의 범위를 설정할 수 있습니다.
-    comments = list(
-        db.comments.find({"member_id": 2}, {"_id": False})
-        .skip((page - 1) * limit)
-        .limit(limit)
-    )
+#     # MongoDB에서 코멘트 데이터 가져오기
+#     # skip과 limit 메소드를 사용하면 가져올 데이터의 범위를 설정할 수 있습니다.
+#     comments = list(
+#         db.comments.find({"member_id": 2}, {"_id": False})
+#         .skip((page - 1) * limit)
+#         .limit(limit)
+#     )
 
-    # 페이지네이션 구현에 필요한 정보를 프론트에 전달합니다.
-    return jsonify(
-        {
-            "count": count,
-            "start_page": start_page,
-            "end_page": end_page,
-            "page_set": page_set,
-            "comments": comments,
-        }
-    )
+#     # 페이지네이션 구현에 필요한 정보를 프론트에 전달합니다.
+#     return jsonify(
+#         {
+#             "count": count,
+#             "start_page": start_page,
+#             "end_page": end_page,
+#             "page_set": page_set,
+#             "comments": comments,
+#         }
+#     )
 
 
 if __name__ == "__main__":
