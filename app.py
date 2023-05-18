@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 import uuid
 import certifi
 from bson.objectid import ObjectId
@@ -119,7 +119,7 @@ def get_comments_with_id(member_id):
         limit = int(request.args.get("limit"))
         limit = limit if limit <= 20 else 20  # limit는 20 이상을 부여할 수 없습니다.
 
-        count = db.comments.count_documents({})
+        count = db.comments.count_documents({"member_id": member_id})
 
         # 페이지네이션 작동에 사용될 변수입니다.
         # 만약 현재 3페이지에 머물고 있다면 페이지네이션은 <1 2 3 4 5>까지만 보여집니다.
@@ -135,6 +135,7 @@ def get_comments_with_id(member_id):
             db.comments.find({"member_id": 2}, {"_id": False})
             .skip((page - 1) * limit)
             .limit(limit)
+            .sort("_id", DESCENDING)
         )
 
         # 페이지네이션 구현에 필요한 정보를 프론트에 전달합니다.
@@ -151,14 +152,19 @@ def get_comments_with_id(member_id):
 
 @app.route("/members/<int:member_id>/comments", methods=["POST"])
 def post_comments_with_id(member_id):
-    if member_id != 2:
-        nick_name = request.form["nick_name"]
-        comment = request.form["comment"]
+    data = {}
+    for key, value in request.form.items():
+        if key == "member_id":
+            continue
+        data[key] = value
+    data["member_id"] = member_id
+    db.comments.insert_one(data)
+    # nick_name = request.form["nick_name"]
+    # comment = request.form["comment"]
+    # data = {"member_id": member_id, "nick_name": nick_name, "comment": comment}
+    # db.comments.insert_one(data)
 
-        post = {"member_id": member_id, "nick_name": nick_name, "comment": comment}
-        db.comments.insert_one(post)
-
-        return jsonify({"msg": "방명록 작성 완료!"})
+    return jsonify({"msg": "방명록 작성 완료!"})
 
 
 # 개인 페이지 코멘트 POST API 입니다.
