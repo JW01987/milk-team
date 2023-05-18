@@ -42,11 +42,13 @@ def minyoung():
 
 # ============여기부터는 메인 페이지 api 구현하는 곳입니다==========
 
+
 @app.route("/memberlist", methods=["GET"])
 def getmember():
     memberlist = list(db.team.find({}, {"_id": 0}))
     print(memberlist)
     return jsonify(memberlist)
+
 
 # db.team.insert_one(데이터)는 데이터를 team 데이터베이스에 저장한다는 뜻입니다
 # 채원님은 수정(업데이트)를 할거니까 update_one을 쓰시면 되겠죠?
@@ -62,16 +64,19 @@ def members():
     id_receive = str(uuid.uuid1())
     name_receive = request.get_json()["name"]
     img_receive = request.get_json()["img"]
-    doc = {"id":id_receive,"name": name_receive, "img": img_receive}
+    doc = {"id": id_receive, "name": name_receive, "img": img_receive}
     db.team.insert_one(doc)
-    return "", 204   #이건 성공/실패 코드입니다 api명세를 보면서 따라해주세요
+    return "", 204  # 이건 성공/실패 코드입니다 api명세를 보면서 따라해주세요
+
 
 @app.route("/members/update", methods=["PUT"])
 def member_update():
-    member_id = request.args.get('memberid')
+    member_id = request.args.get("memberid")
     name_receive = request.get_json()["name"]
     img_receive = request.get_json()["img"]
-    db.team.insert_one({"id":member_id},{"$set":{{"name": name_receive, "img": img_receive}}})
+    db.team.insert_one(
+        {"id": member_id}, {"$set": {{"name": name_receive, "img": img_receive}}}
+    )
     return "", 204
 
 
@@ -89,13 +94,12 @@ def member_update():
 #     db.movies.delete_one({'id':reid,'password':repw})
 #     return jsonify(1)
 
+
 @app.route("/member/delete", methods=["DELETE"])
 def member_del():
-    member_id = request.args.get('memberid')
-    db.team.delete_one({'id':member_id})
-    return "", 204 
-
-
+    member_id = request.args.get("memberid")
+    db.team.delete_one({"id": member_id})
+    return "", 204
 
 
 # ======여기부터는 개인페이지 API입니다===========
@@ -106,9 +110,7 @@ def guestbook_post():
     name_receive = request.form["name_give"]
     comment_receive = request.form["comment_give"]
 
-    doc = {"member_id": 1,
-            "nick_name": name_receive,
-            "comment": comment_receive}
+    doc = {"member_id": 1, "nick_name": name_receive, "comment": comment_receive}
 
     db.comments.insert_one(doc)
     return jsonify({"msg": "방명록 작성 완료!"})
@@ -200,6 +202,31 @@ def get_comments():
             "comments": comments,
         }
     )
+
+
+@app.route("/members/4/comments", methods=["POST"])
+def post_comments_4():
+    """코멘트 포스팅을 처리합니다."""
+    nick_name = request.form["name"]
+    comment = request.form["comment"]
+    member_id = int(request.form["memberid"])
+
+    # 개인 페이지에 대한 댓글 정보
+    post = {
+        "member_id": member_id,
+        "nick_name": nick_name,
+        "comment": comment,
+    }
+
+    # 데이터베이스에 저장합니다.
+    db.comments.insert_one(post)
+
+    return jsonify({"msg": 200})
+
+@app.route("/members/4/comments", methods=["GET"])
+def get_comments_4():
+    comments = list(db.comments.find({"member_id": 4}, {"_id": False}))
+    return jsonify({"result": comments} )
 
 
 if __name__ == "__main__":
