@@ -1,298 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link href="../static/css/index.css" rel="stylesheet" />
-    <title>Team 우유먹고 싶다</title>
-  </head>
-  <body>
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">팀원 추가하기</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+    rel="stylesheet" />
+  <link href="../static/css/index.css" rel="stylesheet" />
+  <title>Team 우유먹고 싶다</title>
+</head>
+
+<body>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">팀원 추가하기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control nameinput" id="floatingInput" placeholder="name@example.com" />
+            <label for="floatingInput">이름</label>
           </div>
-          <div class="modal-body">
-            <div class="form-floating mb-3">
-              <input
-                type="email"
-                class="form-control nameinput"
-                id="floatingInput"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput">이름</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                type="email"
-                class="form-control imginput"
-                id="floatingInput"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput">이미지 주소</label>
-            </div>
-            <div class="form-floating">
-              <textarea
-                class="form-control commentInput"
-                placeholder="Leave a comment here"
-                id="floatingTextarea"
-              ></textarea>
-              <label for="floatingTextarea"> 자기소게</label>
-            </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control imginput" id="floatingInput" placeholder="name@example.com" />
+            <label for="floatingInput">이미지 주소</label>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              닫기
-            </button>
-            <button type="button" class="btn btn-primary" id="submit">
-              등록하기
-            </button>
+          <div class="form-floating">
+            <textarea class="form-control commentInput" placeholder="Leave a comment here"
+              id="floatingTextarea"></textarea>
+            <label for="floatingTextarea"> 자기소개</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            닫기
+          </button>
+          <button type="button" class="btn btn-primary" id="submit">
+            등록하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="teamModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="teamModal">팀원 수정하기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control updateName" id="floatingInput modalName"
+              placeholder="name@example.com" disabled />
+            <!-- 현재 id먹통이라 안됨 -->
+            <label for="floatingInput">이름</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control updateImg" id="floatingInput modalImg"
+              placeholder="name@example.com" />
+            <label for="floatingInput">이미지 주소</label>
+          </div>
+          <div class="form-floating">
+            <textarea class="form-control updateComment" placeholder="Leave a comment here"
+              id="floatingTextarea"></textarea>
+            <label for="floatingTextarea">자기소개</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            닫기
+          </button>
+          <button type="button" class="btn btn-primary" id="updateSubmit">
+            등록하기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header">
+    <p>우유에 목마른 사람들</p>
+    <h1 id="title">우유 먹고 싶다</h1>
+  </div>
+  <div class="body-container">
+    <div class="introduce">
+      <img src="../static/images/milkteam.png" />
+      <div class="teaminfo">
+        <h3>팀 소개</h3>
+        <div class="text-area content">
+          <p>
+            안녕하세요 우유 먹고 싶다 팀입니다. <br />
+            우리 팀은 효과적인 협업과 개방적인 소통을 하고자합니다. <br />멤버
+            간의 의견 공유와 소통을 가장 중요시 여깁니다.<br />
+            미니 프로젝트를 통해 협업을 경험하고,<br />서로의 아이디어를
+            공유하고 결합하여 문제를 해결하는 개발자가 되는 것이 목표입니다.
+          </p>
+        </div>
+        <h3>팀 규칙</h3>
+        <div class="text-area rules">
+          <p>
+            1. 오전 9시 30분 : 출석체크 후 하루 계획 회의<br />
+            2. 오후 2시 : 진척도, 문제점 공유 <br />
+            3. 오후 8시 40분: 오늘 학습한 내용 또는 개발 진척도 확인<br />
+            4. 오후 8시 30분 TIL 하기 <br />
+            5. 모르는 것이 있다면 꼭 공유하기 <br />
+            6. 피드백을 잘 하기 <br />
+          </p>
+        </div>
+      </div>
+    </div>
+    <hr class="hr" />
+    <div class="subtitle">
+      <div>
+        <h3>멋진 팀원들</h3>
+      </div>
+    </div>
+    <div class="mainteam-container">
+      <div class="card team" style="width: 18rem">
+        <img src="/static/images/changbum.png" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">김창범</h5>
+          <div href="#" class="btn btn-outline-dark redirectTo" data-name="changbum">
+            개인 페이지
+          </div>
+        </div>
+      </div>
+
+      <div class="card team" style="width: 18rem">
+        <img src="/static/images/minyoung.png" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">박민영</h5>
+          <div class="btn btn-outline-dark redirectTo" data-name="minyoung">
+            개인 페이지
+          </div>
+        </div>
+      </div>
+
+      <div class="card team" style="width: 18rem">
+        <img src="/static/images/chaewon.png" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">박채원</h5>
+          <div class="btn btn-outline-dark redirectTo" data-name="chaewon">
+            개인 페이지
+          </div>
+        </div>
+      </div>
+
+      <div class="card team" style="width: 18rem">
+        <img src="/static/images/jowon.png" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">한조원</h5>
+          <div class="btn btn-outline-dark redirectTo" data-name="jowon">
+            개인 페이지
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="modal fade"
-      id="teamModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="teamModal">팀원 수정하기</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="form-floating mb-3">
-              <input
-                type="email"
-                class="form-control updateName"
-                id="floatingInput modalName"
-                placeholder="name@example.com"
-                disabled
-              />
-              <!-- 현재 id먹통이라 안됨 -->
-              <label for="floatingInput">이름</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                type="email"
-                class="form-control updateImg"
-                id="floatingInput modalImg"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput">이미지 주소</label>
-            </div>
-            <div class="form-floating">
-              <textarea
-                class="form-control updateComment"
-                placeholder="Leave a comment here"
-                id="floatingTextarea"
-              ></textarea>
-              <label for="floatingTextarea">자기소개</label>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              닫기
-            </button>
-            <button type="button" class="btn btn-primary" id="updateSubmit">
-              등록하기
-            </button>
-          </div>
-        </div>
-      </div>
+    <div class="subtitle newteam">
+      <h3>새로운 팀원들</h3>
+      <button type="button" class="btn btn-outline-dark modalBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        팀원추가하기
+      </button>
     </div>
-    <div class="header">
-      <p>우유에 목마른 사람들</p>
-      <h1 id="title">우유 먹고 싶다</h1>
-    </div>
-    <div class="body-container">
-      <div class="introduce">
-        <img src="../static/images/milkteam.png" />
-        <div class="teaminfo">
-          <h3>팀 소개</h3>
-          <div class="text-area content">
-            <p>
-              안녕하세요 우유 먹고 싶다 팀입니다. <br />
-              우리 팀은 효과적인 협업과 개방적인 소통을 하고자합니다. <br />멤버
-              간의 의견 공유와 소통을 가장 중요시 여깁니다.<br />
-              미니 프로젝트를 통해 협업을 경험하고,<br />서로의 아이디어를
-              공유하고 결합하여 문제를 해결하는 개발자가 되는 것이 목표입니다.
-            </p>
-          </div>
-          <h3>팀 규칙</h3>
-          <div class="text-area rules">
-            <p>
-              1. 오전 9시 30분 : 출석체크 후 하루 계획 회의<br />
-              2. 오후 2시 : 진척도, 문제점 공유 <br />
-              3. 오후 8시 40분: 오늘 학습한 내용 또는 개발 진척도 확인<br />
-              4. 오후 8시 30분 TIL 하기 <br />
-              5. 모르는 것이 있다면 꼭 공유하기 <br />
-              6. 피드백을 잘 하기 <br />
-            </p>
-          </div>
-        </div>
-      </div>
-      <hr class="hr" />
-      <div class="subtitle">
-        <div>
-          <h3>멋진 팀원들</h3>
-        </div>
-      </div>
-      <div class="mainteam-container">
-        <div class="card team" style="width: 18rem">
-          <img
-            src="/static/images/changbum.png"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <h5 class="card-title">김창범</h5>
-            <div
-              href="#"
-              class="btn btn-outline-dark redirectTo"
-              data-name="changbum"
-            >
-              개인 페이지
-            </div>
-          </div>
-        </div>
 
-        <div class="card team" style="width: 18rem">
-          <img
-            src="/static/images/minyoung.png"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <h5 class="card-title">박민영</h5>
-            <div class="btn btn-outline-dark redirectTo" data-name="minyoung">
-              개인 페이지
-            </div>
-          </div>
-        </div>
+    <div class="team-container"></div>
+  </div>
+  <script>
+    const submit = document.querySelector("#submit");
+    const nameInput = document.querySelector(".nameinput");
+    const imgInput = document.querySelector(".imginput");
+    const commentInput = document.querySelector(".commentInput");
 
-        <div class="card team" style="width: 18rem">
-          <img
-            src="/static/images/chaewon.png"
-            class="card-img-top"
-            alt="..."
-          />
-          <div class="card-body">
-            <h5 class="card-title">박채원</h5>
-            <div class="btn btn-outline-dark redirectTo" data-name="minyoung">
-              개인 페이지
-            </div>
-          </div>
-        </div>
-
-        <div class="card team" style="width: 18rem">
-          <img src="/static/images/jowon.png" class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">한조원</h5>
-            <div class="btn btn-outline-dark redirectTo" data-name="jowon">
-              개인 페이지
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="subtitle newteam">
-        <h3>새로운 팀원들</h3>
-        <button
-          type="button"
-          class="btn btn-outline-dark modalBtn"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          팀원추가하기
-        </button>
-      </div>
-
-      <div class="team-container"></div>
-    </div>
-    <script>
-      const submit = document.querySelector("#submit");
-      const nameInput = document.querySelector(".nameinput");
-      const imgInput = document.querySelector(".imginput");
-      const commentInput = document.querySelector(".commentInput");
-
-      function removeMember(id) {
-        fetch(`/member/delete?memberid=${id}`, {
-          headers: { "Content-Type": "application/json" },
-          method: "DELETE",
-        }).then((res) => {
-          if (res.status == 204) window.location.reload();
-          else alert("에러발생");
-        });
-      }
-      $(document).ready(function show_team() {
-        fetch("/memberlist", {
-          headers: { "Content-Type": "application/json" },
-          method: "GET",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            $(".team-container").empty();
-            data.forEach((a) => {
-              let name = a["name"];
-              let img = a["img"];
-              let id = a["id"];
-              let comment = a["comment"];
-              let temp_html = `<div class="card team h-100" style="width: 18rem;">
+    function removeMember(id) {
+      fetch(`/member/delete?memberid=${id}`, {
+        headers: { "Content-Type": "application/json" },
+        method: "DELETE",
+      }).then((res) => {
+        if (res.status == 204) window.location.reload();
+        else alert("에러발생");
+      });
+    }
+    $(document).ready(function show_team() {
+      fetch("/memberlist", {
+        headers: { "Content-Type": "application/json" },
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          $(".team-container").empty();
+          data.forEach((a) => {
+            let name = a["name"];
+            let img = a["img"];
+            let id = a["id"];
+            let comment = a["comment"];
+            let temp_html = `<div class="card team h-100" style="width: 18rem;">
                 <img src="${img}" class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">${name}</h5>
@@ -313,64 +228,64 @@
                   <button class="btn btn-outline-danger" onClick="removeMember('${id}')">삭제</button>
                 </div>
               </div>`;
-              $(".team-container").append(temp_html);
-            });
+            $(".team-container").append(temp_html);
           });
-      });
-
-      function updateModal(e) {
-        let id = e.target.dataset.id;
-        let img = e.target.dataset.img;
-        let name = e.target.dataset.name;
-        let comment = e.target.dataset.comment;
-
-        $(".updateName").val(name);
-        $(".updateImg").val(img);
-        $(".updateComment").val(comment);
-        $("#updateSubmit").data("id", id);
-      }
-      $("#updateSubmit").on("click", function (ev) {
-        let updateName = $(".updateName").val();
-        let updateImg = $(".updateImg").val();
-        let updateComment = $(".updateComment").val();
-        let updateId = $("#updateSubmit").data("id");
-        let data = {
-          name: updateName,
-          img: updateImg,
-          memberid: updateId,
-          comment: updateComment,
-        };
-        fetch("/member/update", {
-          headers: { "Content-Type": "application/json" },
-          method: "PUT",
-          body: JSON.stringify(data),
-        }).then((res) => {
-          if (res.status == 204) window.location.reload();
-          else alert("에러발생");
         });
-      });
+    });
 
-      $(".redirectTo").on("click", function (e) {
-        let name = e.target.dataset.name;
-        console.log(name);
-        window.location.href = `/${name}`;
-      });
+    function updateModal(e) {
+      let id = e.target.dataset.id;
+      let img = e.target.dataset.img;
+      let name = e.target.dataset.name;
+      let comment = e.target.dataset.comment;
 
-      submit.addEventListener("click", (e) => {
-        let data = {
-          name: nameInput.value,
-          img: imgInput.value,
-          comment: commentInput.value,
-        };
-        fetch("/members", {
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-          body: JSON.stringify(data),
-        }).then((res) => {
-          if (res.status == 204) window.location.reload();
-          else alert("에러발생");
-        });
+      $(".updateName").val(name);
+      $(".updateImg").val(img);
+      $(".updateComment").val(comment);
+      $("#updateSubmit").data("id", id);
+    }
+    $("#updateSubmit").on("click", function (ev) {
+      let updateName = $(".updateName").val();
+      let updateImg = $(".updateImg").val();
+      let updateComment = $(".updateComment").val();
+      let updateId = $("#updateSubmit").data("id");
+      let data = {
+        name: updateName,
+        img: updateImg,
+        memberid: updateId,
+        comment: updateComment,
+      };
+      fetch("/member/update", {
+        headers: { "Content-Type": "application/json" },
+        method: "PUT",
+        body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status == 204) window.location.reload();
+        else alert("에러발생");
       });
-    </script>
-  </body>
+    });
+
+    $(".redirectTo").on("click", function (e) {
+      let name = e.target.dataset.name;
+      window.location.href = `/${name}`;
+    });
+
+    submit.addEventListener("click", (e) => {
+      let data = {
+        name: nameInput.value,
+        img: imgInput.value,
+        comment: commentInput.value,
+      };
+      fetch("/members", {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then((res) => {
+        if (res.status == 204) window.location.reload();
+        else alert("에러발생");
+      });
+    });
+  </script>
+</body>
+
 </html>

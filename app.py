@@ -13,12 +13,6 @@ client = MongoClient(
 db = client.milk
 app = Flask(__name__)
 
-# 본인의 개인페이지를 아래 형식에 맞추어 넣어주세요
-#
-# @app.route('/영문이름')
-# def 함수이름():
-#    return render_template('자신이 만든 html이름.html')
-
 
 @app.route("/")
 def home():
@@ -31,13 +25,18 @@ def jowon():
 
 
 @app.route("/changbum")
-def userhome():
+def changbum():
     return render_template("changbum.html")
 
 
 @app.route("/minyoung")
 def minyoung():
     return render_template("minyoung.html")
+
+
+@app.route("/chaewon")
+def chaewon():
+    return render_template("chaewon.html")
 
 
 # ============여기부터는 메인 페이지 api 구현하는 곳입니다==========
@@ -67,11 +66,9 @@ def members():
 
 @app.route("/member/update", methods=["PUT"])
 def member_update():
-    # member_id = request.get_json()["memberid"]
     name_receive = request.get_json()["name"]
     img_receive = request.get_json()["img"]
     comment_receive = request.get_json()["comment"]
-    # result = db.team.update_one({"id":member_id},{"$set":{"name":name_receive,"img":img_receive,"comment":comment_receive}})
     result = db.team.update_one(
         {"name": name_receive},
         {"$set": {"img": img_receive, "comment": comment_receive}},
@@ -137,53 +134,25 @@ def get_comments_with_id(member_id):
 @app.route("/members/<int:member_id>/comments", methods=["POST"])
 def post_comments_with_id(member_id):
     data = {}
+    data["member_id"] = member_id
+
     for key, value in request.form.items():
         if key == "member_id":  # formData에 들어간 member_id가 str로 담기므로 제외함
             continue
         data[key] = value
-    data["member_id"] = member_id
+
+    kst = timezone(timedelta(hours=9))
+    now = datetime.now(tz=kst)  # 한국 기준 현재시각을 출력합니다.
+    data["upload_time"] = now
     db.comments.insert_one(data)
 
     return jsonify({"msg": "방명록 작성 완료!"})
 
-@app.route("/comments/<commentid>", methods=["DELETE"])
-def comments_del(commentid):
-    print(commentid)
-    member_id = request.args.get("memberid_give")
-    comments_id = request.args.get("commentid_give")
-    db.comments.delete_one({"_id": ObjectId(commentid)})
-    return "", 204
 
-
-# 개인 페이지 코멘트 POST API 입니다.
-@app.route("/members/2/comments", methods=["POST"])
-def post_comments():
-    """코멘트 포스팅을 처리합니다.
-    - 프론트에서 formData형식으로 닉네임과 패스워드, 코멘트정보를 전달받습니다.
-    - 현재 시각과 맴버id를 추가하여 mongoDB에 추가합니다.
-    """
-    nickname = request.form["nickname"]
-    password = request.form["password"]
-    comment = request.form["comment"]
-
-    # 현재시각을 변수로 지정합니다.
-    # 코멘트 POST요청을 받으면 현재시각을 생성하여 데이터베이스에 넣도록 했습니다.
-    kst = timezone(timedelta(hours=9))
-    now = datetime.now(tz=kst)  # 한국 기준 현재시각을 출력합니다.
-
-    # 개인 페이지에 대한 댓글 정보
-    post = {
-        "member_id": 2,
-        "nick_name": nickname,
-        "comment": comment,
-        "password": password,
-        "upload_time": now,
-    }
-
-    # 데이터베이스에 저장합니다.
-    db.comments.insert_one(post)
-
-    return jsonify({"msg": "등록을 완료했습니다."})
+@app.route("/members/<int:member_id>/comments/<comment_id>", methods=["DELETE"])
+def delete_comments_with_id(member_id, comment_id):
+    db.comments.delete_one({"_id": ObjectId(comment_id)})
+    return jsonify({"msg": "방명록 삭제 완료!"})
 
 
 if __name__ == "__main__":

@@ -15,7 +15,8 @@ $(document).ready(function () {
 async function commentsListing() {
   const response = await fetch(`/members/2/comments?page=${page}&limit=${limit}`);
   const data = await response.json();
-  let { count, start_page, end_page, page_set, comments } = data
+  let { _id, count, start_page, end_page, page_set, comments } = data
+  console.log(_id)
 
   $('#comment-list').empty()
   $('.title-list').text(`📂 리스트 (${count})`)
@@ -79,7 +80,7 @@ async function commentsListing() {
 
 async function posting() {
   let formData = new FormData();
-  formData.append("nickname", inputChecker("닉네임", $("#nickname").val()));
+  formData.append("nick_name", inputChecker("닉네임", $("#nickname").val()));
   formData.append("password", inputChecker("비밀번호", $("#password").val()));
   formData.append("comment", inputChecker("코멘트", $("#comment").val()));
 

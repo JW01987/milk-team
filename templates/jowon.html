@@ -1,223 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Serif+KR&display=swap" rel="stylesheet">
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
 
-    <title>개인페이지</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Serif+KR&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
-    <meta property="og:title" content="한조원 개인페이지" />
-    <meta property="og:description" content="우유 먹고 싶다 팀입니다" />
-    <meta
-      property="og:image"
-      content="https://cdn.topstarnews.net/news/photo/201807/456143_108614_510.jpg"
-    />
+  <title>개인페이지</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      * {
-        font-family: 'Nanum Gothic', sans-serif;
-        font-family: 'Noto Serif KR', serif;
-      }
+  <meta property="og:title" content="한조원 개인페이지" />
+  <meta property="og:description" content="우유 먹고 싶다 팀입니다" />
+  <meta property="og:image" content="https://cdn.topstarnews.net/news/photo/201807/456143_108614_510.jpg" />
 
-      .museum {
-        background-image: linear-gradient(
-            0deg,
-            rgba(0, 0, 0, 0.5),
-            rgba(0, 0, 0, 0.5)
-          ),
-          url("https://www.gnm.de/fileadmin/_processed_/f/a/csm_GNM-Ausstellung-Renaissance-Barock-Aufkl%C3%A4rung02_9ddc8d2cd8.jpg");
-        background-size: cover;
-        background-position: center;
-        width: 100%;
-        height: 500px;
-        position: relative;
-      }
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+    rel="stylesheet" />
+  <style>
+    * {
+      font-family: 'Nanum Gothic', sans-serif;
+      font-family: 'Noto Serif KR', serif;
+    }
 
-      .mypic {
-        background-image: url("/static/images/jowon.png");
-        background-position: center ;
-        background-size: cover;
-        border-radius: 3px;
-        box-shadow: 0 0 5px #333;
-        width: 35%;
-        height: 600px;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 10%;
-        position: absolute;
-      }
-      .introCard {
-        font-weight: 600;
-        width: 95%;
-        max-width: 800px;
-        margin: 250px auto 20px auto;
-        padding: 40px 20px 10px 20px;
-        /* background-color: #91acbe; */
-        border: 10px solid #91acbe;
-        border-radius: 3px;
-        text-align: center;
-        box-shadow: 1px 0 6px #333;
-      }
-      .introCard > h3 {
-        margin-bottom: 15px;
-      }
-      .introCard > a {
-        text-decoration: none;
-      }
-      .introCard > a:hover{
-        color:blue;
-      } 
-      .hr-sect {
-        display: flex;
-        width: 35%;
-        align-items: center;
-        font-size: 30px;
-        margin: 100px auto 20px auto;
-      }
-      .hr-sect::before,
-      .hr-sect::after {
-        content: "";
-        flex-grow: 1;
-        background: rgba(0, 0, 0, 0.35);
-        height: 1px;
-        font-size: 0px;
-        line-height: 0px;
-        margin: 0px 16px;
-      }
-      .btn-div{
-        margin: auto;
-        width: 45%;
-        text-align: end;
-      }
-      .btn:focus{
-        box-shadow: none;
-      }
-      .comment-list{
-        margin-top: 20px;
-      }
-      .comment{
-        margin: 10px auto 20px auto;
-        /* padding: 40px 20px 10px 20px; */
-      
-      }
-      .test{
-        display: flex;
-        flex-direction: row;
-      }
-    </style>
+    .museum {
+      background-image: linear-gradient(0deg,
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.5)),
+        url("https://www.gnm.de/fileadmin/_processed_/f/a/csm_GNM-Ausstellung-Renaissance-Barock-Aufkl%C3%A4rung02_9ddc8d2cd8.jpg");
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 500px;
+      position: relative;
+    }
 
-  </head>
-  <body>
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">감상평 남기기</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+    .mypic {
+      background-image: url("/static/images/jowon.png");
+      background-position: center;
+      background-size: cover;
+      border-radius: 3px;
+      box-shadow: 0 0 5px #333;
+      width: 35%;
+      height: 600px;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 10%;
+      position: absolute;
+    }
+
+    .introCard {
+      font-weight: 600;
+      width: 95%;
+      max-width: 800px;
+      margin: 250px auto 20px auto;
+      padding: 40px 20px 10px 20px;
+      /* background-color: #91acbe; */
+      border: 10px solid #91acbe;
+      border-radius: 3px;
+      text-align: center;
+      box-shadow: 1px 0 6px #333;
+    }
+
+    .introCard>h3 {
+      margin-bottom: 15px;
+    }
+
+    .introCard>a {
+      text-decoration: none;
+    }
+
+    .introCard>a:hover {
+      color: blue;
+    }
+
+    .hr-sect {
+      display: flex;
+      width: 35%;
+      align-items: center;
+      font-size: 30px;
+      margin: 100px auto 20px auto;
+    }
+
+    .hr-sect::before,
+    .hr-sect::after {
+      content: "";
+      flex-grow: 1;
+      background: rgba(0, 0, 0, 0.35);
+      height: 1px;
+      font-size: 0px;
+      line-height: 0px;
+      margin: 0px 16px;
+    }
+
+    .btn-div {
+      margin: auto;
+      width: 45%;
+      text-align: end;
+    }
+
+    .btn:focus {
+      box-shadow: none;
+    }
+
+    .comment-list {
+      margin-top: 20px;
+    }
+
+    .comment {
+      margin: 10px auto 20px auto;
+      /* padding: 40px 20px 10px 20px; */
+
+    }
+
+    .test {
+      display: flex;
+      flex-direction: row;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">감상평 남기기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control nameinput" id="floatingInput" placeholder="name@example.com" />
+            <label for="floatingInput">닉네임</label>
           </div>
-          <div class="modal-body">
-            <div class="form-floating mb-3">
-              <input
-                type="email"
-                class="form-control nameinput"
-                id="floatingInput"
-                placeholder="name@example.com"
-              />
-              <label for="floatingInput">닉네임</label>
-            </div>
-            <div class="form-floating">
-              <textarea
-                class="form-control commentinput"
-                placeholder="Leave a comment here"
-                id="floatingTextarea2"
-                style="height: 100px"
-              ></textarea>
-              <label for="floatingTextarea2">감상평</label>
-            </div>
+          <div class="form-floating">
+            <textarea class="form-control commentinput" placeholder="Leave a comment here" id="floatingTextarea2"
+              style="height: 100px"></textarea>
+            <label for="floatingTextarea2">감상평</label>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              닫기
-            </button>
-            <button type="button" class="btn btn-primary" id="submit">등록하기</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            닫기
+          </button>
+          <button type="button" class="btn btn-primary" id="submit">등록하기</button>
         </div>
       </div>
     </div>
-    <div class="museum"></div>
-    <div class="mypic"></div>
-    <div class="introCard">
-      <h3>한조원</h3>
-      <p>
-        INFP 멋쟁이 해골<br>
-        말을 잘 들어줍니다<br>
-        장난을 잘 칩니다<br>
-      </p>
-      <a style="margin-right:3px;" href="https://velog.io/@jw01987" target="_blank">Velog</a>
-      <a href="https://github.com/JW01987" target="_blank">Github</a>
+  </div>
+  <div class="museum"></div>
+  <div class="mypic"></div>
+  <div class="introCard">
+    <h3>한조원</h3>
+    <p>
+      INFP 멋쟁이 해골<br>
+      말을 잘 들어줍니다<br>
+      장난을 잘 칩니다<br>
+    </p>
+    <a style="margin-right:3px;" href="https://velog.io/@jw01987" target="_blank">Velog</a>
+    <a href="https://github.com/JW01987" target="_blank">Github</a>
 
-    </div>
-  
-    <div class="hr-sect">감상평</div>
-    <div class="btn-div">
-    <button
-      type="button"
-      class="btn btn-outline-dark"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
-    >
+  </div>
+
+  <div class="hr-sect">감상평</div>
+  <div class="btn-div">
+    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
       감상평 남기기
     </button>
   </div>
 
-    </div>
-    <div class="comment-list">
+  </div>
+  <div class="comment-list">
 
   </div>
   <script>
     function show_comment() {
       fetch('/members/4/comments').then((res) => res.json()).then((data) => {
-          let rows = data['result']
-          $(".comment-list").empty()
-          rows.forEach((a) => {
-            let name = a['nick_name']
-            let comment = a['comment']
-            let temp_html = 
+        let rows = data['result']
+        $(".comment-list").empty()
+        rows.forEach((a) => {
+          let name = a['nick_name']
+          let comment = a['comment']
+          let temp_html =
             `<div class="card comment" style="width: 25rem;">
                 <div class="card-body">
                   <h5 class="card-title">${name}</h5>
@@ -227,28 +198,28 @@
                   </button>
                 </div>
               </div>`
-            $(".comment-list").append(temp_html)
-          })
-        })  
+          $(".comment-list").append(temp_html)
+        })
+      })
     }
     window.onload = function () {
       const submit = document.querySelector("#submit")
       const nameInput = document.querySelector(".nameinput")
       const commentInput = document.querySelector(".commentinput")
 
-      submit.addEventListener("click", (e)=>{
+      submit.addEventListener("click", (e) => {
         let formData = new FormData();
         formData.append("nick_name", nameInput.value);
         formData.append("comment", commentInput.value);
         formData.append("member_id", 4);
-        fetch("/members/4/comments", 
-        {
-        method: "POST",
-        body: formData
-        }).then((res) => {
-          if (res.status == 200) window.location.reload()
-          else alert('에러발생')
-      })
+        fetch("/members/4/comments",
+          {
+            method: "POST",
+            body: formData
+          }).then((res) => {
+            if (res.status == 200) window.location.reload()
+            else alert('에러발생')
+          })
       })
 
       $(document).ready(function () {
@@ -256,5 +227,6 @@
       });
     };
   </script>
-  </body>
+</body>
+
 </html>

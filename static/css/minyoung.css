@@ -72,7 +72,6 @@ a {
 
 .myinfo p {
   padding-top: 10px;
-  white-space: pre-wrap;
   overflow: auto;
 }
 

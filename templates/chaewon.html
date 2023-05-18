@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <title>스파르타 피디아</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+
+    .mytitle {
+      width: 100%;
+      height: 250px;
+
+      background-image: linear-gradient(0deg, rgba(189, 246, 210, 0.557), rgba(220, 251, 244, 0.705)), url('https://lh3.googleusercontent.com/2sIa3wm71zwWGsmVPgE2l__Y1xzCTa3nk452J-DOQmU9oBH5FgWqsoXKJmlTWT-wL65aJaLcM4dhtosCr1VAWQztq_LpcbkoaIlna3Tdeg');
+      background-position: center;
+      background-size: cover;
+      font-size: 30px;
+
+      color: rgb(2, 27, 10);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mytitle>button {
+      width: 200px;
+      height: 50px;
+
+      background-color: transparent;
+      color: rgb(0, 0, 95);
+
+      border-radius: 50px;
+      border: 1px solid rgb(59, 22, 243);
+
+      margin-top: 20px;
+    }
+
+    .mytitle>button:hover {
+      border: 2px solid rgb(196, 248, 40);
+    }
+
+    .mycomment {
+      color: gray;
+    }
+
+    .mycards {
+      margin: 20px auto 0px auto;
+      width: 95%;
+      max-width: 1200px;
+    }
+
+    .mypost {
+      width: 95%;
+      max-width: 500px;
+      margin: 20px auto 0px auto;
+      padding: 20px;
+      box-shadow: 0px 0px 3px 0px gray;
+
+      display: none;
+    }
+
+    .mybtns {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      margin-top: 20px;
+    }
+
+    .mybtns>button {
+      margin-right: 10px;
+    }
+  </style>
+  <script>
+    $(document).ready(function () {
+      listing();
+    });
+
+    function listing() {
+      fetch('/movie').then((res) => res.json()).then((data) => {
+        let rows = data['result']
+        // $('#cards-box').empty()
+        rows.forEach((a) => {
+          let comment = a['comment']
+          let title = a['title']
+          let desc = a['desc']
+          let image = a['image']
+          let star = a['star']
+
+          let star_repeat = '⭐'.repeat(star)
+
+          let temp_html = ` <div class="col">
+                                        <div class="card h-100">
+                                            <img src="${image}"
+                                                class="card-img-top">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${title}</h5>
+                                                <p class="card-text">${desc}</p>
+                                                <p>${star_repeat}</p>
+                                                <p class="mycomment">${comment}</p>
+                                            </div>
+                                        </div>
+                                    </div>`
+          $('#cards-box').append(temp_html)
+        })
+      })
+    }
+
+    function posting() {
+      let url = $('#url').val()
+      let comment = $('#comment').val()
+
+
+      let formData = new FormData();
+      formData.append("url_give", url);
+      formData.append("comment_give", comment);
+
+      fetch('/movie', { method: "POST", body: formData }).then((res) => res.json()).then((data) => {
+        alert(data['msg'])
+        window.location.reload
+      })
+    }
+
+    function open_box() {
+      $('#post-box').show()
+    }
+    function close_box() {
+      $('#post-box').hide()
+    }
+  </script>
+</head>
+
+<body>
+  <div class="mytitle">
+    <h1>안녕 난 박채원</h1>
+    <button onclick="open_box()">방명록</button>
+  </div>
+  <div class="mypost" id="post-box">
+    <div class="form-floating mb-3">
+      <input id="url" type="email" class="form-control" placeholder="name@example.com">
+      <label>사진URL</label>
+    </div>
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="inputGroupSelect01">추천</label>
+      <select class="form-select" id="star">
+        <option selected>-- 선택하기 --</option>
+        <option value="1">⭐</option>
+        <option value="2">⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="5">⭐⭐⭐⭐⭐</option>
+      </select>
+    </div>
+    <div class="form-floating">
+      <textarea id="comment" class="form-control" placeholder="Leave a comment here"></textarea>
+      <label for="floatingTextarea2">댓글</label>
+    </div>
+    <div class="mybtns">
+      <button onclick="posting()" type="button" class="btn btn-dark">남기기</button>
+      <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+    </div>
+  </div>
+  <div class="mycards">
+    <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+      <div class="col">
+        <div class="card h-100">
+          <img
+            src="https://lh3.googleusercontent.com/vhyy2694q4HXN5KxiWw3pYLOBQhet4AfSRCVQ5AayHizymScUGBV7UCFHIvB_Azsm82yjsRQy3QFWwtrvgiBoivoiKF3NN7da001lbr2"
+            class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">내가 키우는 고앵이</h5>
+            <p class="card-text">현재 11살 독불장군 입맛이 까다로워요</p>
+            <p>⭐⭐⭐⭐⭐</p>
+            <p class="mycomment">뱃살이 끝내줘요</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img
+            src="https://lh3.googleusercontent.com/R1tNaE5TQ_rsCOExyb24OELLEJnOUv_O57pyKpb7HuJrse2RODpi4NUppUABqYp-SoNZR06RLwVgidQcvq7h2IeVzfmhksmIo7kms1Yd"
+            class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">여행 가자!</h5>
+            <p class="card-text">맛집탐방 및 여행을 무척 좋아해요~ 개인 블로그로 탐방일지 작성이 취미에요</p>
+            <p>⭐⭐⭐</p>
+            <p class="mycomment">음~마있겟다</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img
+            src="https://lh3.googleusercontent.com/6V2oLPjAqcVhqYOpW8EQ70iPAWoMK121tt73vNkC4TtBd8vAIhOM5vfhQ-xhR9ANz-8DSsKMK8RI1IB26eXwBW6Kym_foVaqHpj7qZJI"
+            class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">이게 나야~</h5>
+            <p class="card-text">새로운것을 하는게 즐거워요 이번 부트캠프도 열심히 하겠습니다</p>
+            <p>⭐⭐⭐</p>
+            <p class="mycomment">다들 고생많으신데 화이팅해요</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img
+            src="https://lh3.googleusercontent.com/V_Y516hXBZAQNHn0buacoalcfn6uuFUy_XLvDCe8Ucb9DPJisXa0cmLzUrpjsBLDG-T1_O7BQd8DXfUP8mJY7QccnDWolgefFPW2Waxk"
+            class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">나는 25살 새로운 도전</h5>
+            <p class="card-text">원래는 다른일을 하다가 우연히 스파르타 코딩을 접하게 되었어요 열심히 배우고 싶어요</p>
+            <p>⭐⭐⭐</p>
+            <p class="mycomment">열심히는 하지만 배우는게 느려요 많이 가르쳐주세요</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
