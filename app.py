@@ -104,6 +104,15 @@ def member_del():
 
 # ======여기부터는 개인페이지 API입니다===========
 
+@app.route("/members/<int:member_id>/comments", methods=["GET"])
+def get_comments_with_id_1(member_id):
+    if member_id != 2:
+      comments = list(db.comments.find({"member_id": member_id}))
+      for obj in comments:
+          obj['_id'] = str(obj['_id'])
+      return jsonify({'result': comments})
+    
+
 
 @app.route("/members/1/comments", methods=["POST"])
 def guestbook_post():
@@ -114,13 +123,6 @@ def guestbook_post():
 
     db.comments.insert_one(doc)
     return jsonify({"msg": "방명록 작성 완료!"})
-
-
-@app.route("/members/1/comments", methods=["GET"])
-def guestbook_get():
-    all_comments = list(db.comments.find({"member_id": 1}, {"_id": False}))
-    all_id = list(db.comments.find({}, {"_id": ObjectId()}))
-    return jsonify({"result": all_comments, "resultid": obejectInCoder(all_id)})
 
 
 def obejectInCoder(list):
@@ -222,11 +224,6 @@ def post_comments_4():
     db.comments.insert_one(post)
 
     return jsonify({"msg": 200})
-
-@app.route("/members/4/comments", methods=["GET"])
-def get_comments_4():
-    comments = list(db.comments.find({"member_id": 4}, {"_id": False}))
-    return jsonify({"result": comments} )
 
 
 if __name__ == "__main__":
