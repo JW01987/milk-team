@@ -88,27 +88,31 @@
     <div class="header">
       <p>우유에 목마른 사람들</p>
       <h1 id="title">우유 먹고 싶다</h1>
+      <button type="button" class="btn btn-primary redirectTo">등록하기</button>
     </div>
     <div class="body-container">
       <div class="introduce">
-        <img src="../static/images/no_img.png" />
+        <img src="../static/images/milkteam.png" />
         <div class="teaminfo">
           <h3>팀 소개</h3>
           <div class="text-area content">
             <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-              Excepturi neque facere voluptas ipsam voluptates porro possimus
-              perferendis molestias quia minus, cumque autem est qui culpa
-              reiciendis tempore beatae quasi nesciunt!
+              안녕하세요 우유 먹고 싶다 팀입니다. <br />
+              우리 팀은 효과적인 협업과 개방적인 소통을 하고자합니다. <br />멤버
+              간의 의견 공유와 소통을 가장 중요시 여깁니다.<br />
+              미니 프로젝트를 통해 협업을 경험하고,<br />서로의 아이디어를
+              공유하고 결합하여 문제를 해결하는 개발자가 되는 것이 목표입니다.
             </p>
           </div>
           <h3>팀 규칙</h3>
           <div class="text-area rules">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
-              reprehenderit, nobis laborum possimus corporis illum labore cum
-              sit nisi, corrupti earum repellendus quod assumenda iste libero
-              sint deserunt laboriosam adipisci!
+              1. 오전 9시 30분 : 출석체크 후 하루 계획 회의<br />
+              2. 오후 2시 : 진척도, 문제점 공유 <br />
+              3. 오후 8시 40분: 오늘 학습한 내용 또는 개발 진척도 확인<br />
+              4. 오후 8시 30분 TIL 하기 <br />
+              5. 모르는 것이 있다면 꼭 공유하기 <br />
+              6. 피드백을 잘 하기 <br />
             </p>
           </div>
         </div>
@@ -117,8 +121,55 @@
       <div class="subtitle">
         <div>
           <h3>멋진 팀원들</h3>
-          <p>과 최애 우유</p>
         </div>
+      </div>
+      <div class="mainteam-container">
+        <div class="card team" style="width: 18rem">
+          <img
+            src="/static/images/changbum.png"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title">김창범</h5>
+            <a href="#" class="btn btn-outline-dark">개인 페이지</a>
+          </div>
+        </div>
+
+        <div class="card team" style="width: 18rem">
+          <img
+            src="/static/images/minyoung.png"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title">박민영</h5>
+            <a href="#" class="btn btn-outline-dark">개인 페이지</a>
+          </div>
+        </div>
+
+        <div class="card team" style="width: 18rem">
+          <img
+            src="/static/images/chaewon.png"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title">박채원</h5>
+            <a href="#" class="btn btn-outline-dark">개인 페이지</a>
+          </div>
+        </div>
+
+        <div class="card team" style="width: 18rem">
+          <img src="/static/images/jowon.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">한조원</h5>
+            <a href="#" class="btn btn-outline-dark">개인 페이지</a>
+          </div>
+        </div>
+      </div>
+      <div class="subtitle newteam">
+        <h3>새로운 팀원들</h3>
         <button
           type="button"
           class="btn btn-outline-dark modalBtn"
@@ -129,42 +180,7 @@
         </button>
       </div>
 
-      <div class="team-container">
-        <div class="team">
-          <img src="../static/images/no_img.png" width="300px" height="200px" />
-          <div class="info">
-            <a href="#">이름</a>
-          </div>
-        </div>
-
-        <div class="team">
-          <img src="../static/images/no_img.png" width="300px" height="200px" />
-          <div class="info">
-            <a href="#">이름</a>
-          </div>
-        </div>
-
-        <div class="team">
-          <img src="../static/images/no_img.png" width="300px" height="200px" />
-          <div class="info">
-            <a href="#">이름</a>
-          </div>
-        </div>
-
-        <div class="team">
-          <img src="../static/images/no_img.png" width="300px" height="200px" />
-          <div class="info">
-            <a href="#">이름</a>
-          </div>
-        </div>
-
-        <div class="team">
-          <img src="../static/images/no_img.png" width="300px" height="200px" />
-          <div class="info">
-            <a href="#">이름</a>
-          </div>
-        </div>
-      </div>
+      <div class="team-container"></div>
     </div>
     <script>
       window.onload = function () {
@@ -179,12 +195,14 @@
               data.forEach((a) => {
                 let name = a["name"];
                 let img = a["img"];
-                let temp_html = `<div class="team">
-              <img src="${img}" width="300px" height="200px">
-              <div class="info">
-                <a href="#">${name}</a>
-              </div>
-            </div>`;
+                let temp_html = `<div class="card team h-100" style="width: 18rem;">
+                  <img src="${img}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">${name}</h5>
+                    <button class="btn btn-primary">수정</button>
+                    <button class="btn btn-primary">삭제</button>
+                  </div>
+                </div>`;
                 $(".team-container").append(temp_html);
               });
             });
@@ -192,6 +210,10 @@
         const submit = document.querySelector("#submit");
         const nameInput = document.querySelector(".nameinput");
         const imgInput = document.querySelector(".imginput");
+
+        $(".redirectTo").on("click", function () {
+          window.location.href = "/jowon";
+        });
 
         submit.addEventListener("click", (e) => {
           let data = {
