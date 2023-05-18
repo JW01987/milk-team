@@ -42,27 +42,45 @@ def minyoung():
 
 # ============여기부터는 메인 페이지 api 구현하는 곳입니다==========
 
-
-# 채원님 이거 참고하셔서 수정기능 만들면 쉬워요!!
-# 멤버 아이디(1=김창범,2=박민영,3=박채원,4=한조원)를 기준으로 검색 후 수정하시면 됩니다!
-@app.route("/members", methods=["POST"])
-def members():
-    name_receive = request.get_json()["name"]
-    img_receive = request.get_json()["img"]
-    doc = {"name": name_receive, "img": img_receive}
-    db.team.insert_one(doc)
-    return "", 204  # 이건 성공/실패 코드입니다 api명세를 보면서 따라해주세요
-
-
 @app.route("/memberlist", methods=["GET"])
 def getmember():
     memberlist = list(db.team.find({}, {"_id": 0}))
     print(memberlist)
     return jsonify(memberlist)
 
+# db.team.insert_one(데이터)는 데이터를 team 데이터베이스에 저장한다는 뜻입니다
+# 채원님은 수정(업데이트)를 할거니까 update_one을 쓰시면 되겠죠?
+# update_one(첫번째,{$set:{두번째}})은 두가지 내용을 받아요 첫번째는 어떤 걸 수정할건지의 "어떤 것"입니다 먼저 수정해야할 대상을 찾는거죠
+# 멤버 아이디(1=김창범,2=박민영,3=박채원,4=한조원)를 기준으로 검색 후 수정하시면 됩니다!
+# 멤버아이디로는 쿼리스트링(url에 낑겨서 온 데이터)을 사용할겁니다
+# request.args.get('memberid') <- 쿼리 스트링에서(url) 멤버 아이디를 추출하는 방법
+# 쿼리스트링에서 추출한 데이터를 첫번째에 넣어주면 되겠죠?
+# $set은 그냥 약속입니다 수정할거면 이렇게 적어주세요~ 라 넘기셔도 되고 두번째를 채우면 됩니다 저장하기와 거의 똑같이 적어주시면 됩니다
+#  name_receive = request.get_json()["name"] img_receive = request.get_json()["img"] 이름과 이미지를 가지고 오는 코드를 변수에 저장하고 딕셔너리 {} 애 넣어 코드를 적어주세요!
+@app.route("/members", methods=["POST"])
+def members():
+    id_receive = str(uuid.uuid1())
+    name_receive = request.get_json()["name"]
+    img_receive = request.get_json()["img"]
+    doc = {"id":id_receive,"name": name_receive, "img": img_receive}
+    db.team.insert_one(doc)
+    return "", 204   #이건 성공/실패 코드입니다 api명세를 보면서 따라해주세요
 
-# 채원님 이거 참고하셔서 만들면 금방 하실 수 있어요!!
-# request.args.get('memberid') <- 쿼리 스트링에서 멤버 아이디를 추출하는 방법
+@app.route("/members/update", methods=["PUT"])
+def member_update():
+    member_id = request.args.get('memberid')
+    name_receive = request.get_json()["name"]
+    img_receive = request.get_json()["img"]
+    db.team.insert_one({"id":member_id},{"$set":{{"name": name_receive, "img": img_receive}}})
+    return "", 204
+
+
+# db.movies.delete_one({'id':reid,'password':repw}) <-저희 데이터 베이스 이름은 team입니다 movies를 team으로 바꾸면 되겠죠?
+# db.movies.delete_one({안에있는 걸 검색해서 삭제}) delete_one은 괄호안의 내용을 검색해 삭제한다는 뜻입니다 아래 코드는 아이디와 비밀번호를 이용해서 삭제했네요
+# 저희는 쿼리스트링(url에 낑겨서 온 데이터)를 사용할겁니다
+# request.args.get('memberid') <- 쿼리 스트링에서(url) 멤버 아이디를 추출하는 방법
+
+# 아래는 예시 코드입니다 조금만 손보면 만들 수 있어요!
 # @app.route("/del", methods=["DELETE"])
 # def movie_del():
 #     allmovie = request.get_json()
@@ -70,6 +88,14 @@ def getmember():
 #     repw = allmovie['password']
 #     db.movies.delete_one({'id':reid,'password':repw})
 #     return jsonify(1)
+
+@app.route("/member/delete", methods=["DELETE"])
+def member_del():
+    member_id = request.args.get('memberid')
+    db.team.delete_one({'id':member_id})
+    return "", 204 
+
+
 
 
 # ======여기부터는 개인페이지 API입니다===========
