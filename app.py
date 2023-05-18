@@ -75,22 +75,23 @@ def getmember():
 # ======여기부터는 개인페이지 API입니다===========
 
 
-@app.route("/user/comment", methods=["POST"])
+@app.route("/comments", methods=["POST"])
 def guestbook_post():
     name_receive = request.form["name_give"]
     comment_receive = request.form["comment_give"]
 
-    doc = {"master": "Changbum Kim", "name": name_receive, "comment": comment_receive}
+    doc = {"member_id": 1,
+            "nick_name": name_receive,
+            "comment": comment_receive}
 
-    db.team.insert_one(doc)
+    db.comments.insert_one(doc)
     return jsonify({"msg": "방명록 작성 완료!"})
 
 
-@app.route("/all_comment", methods=["GET"])
+@app.route("/members/comments/1", methods=["GET"])
 def guestbook_get():
-    all_comments = list(db.team.find({"master": "Changbum Kim"}, {"_id": False}))
-    all_id = list(db.team.find({"master": "Changbum Kim"}, {"_id": ObjectId()}))
-
+    all_comments = list(db.comments.find({"member_id": 1}, {"_id": False}))
+    all_id = list(db.comments.find({}, {"_id": ObjectId()}))
     return jsonify({"result": all_comments, "resultid": obejectInCoder(all_id)})
 
 
