@@ -45,7 +45,6 @@ def minyoung():
 @app.route("/memberlist", methods=["GET"])
 def getmember():
     memberlist = list(db.team.find({}, {"_id": 0}))
-    print(memberlist)
     return jsonify(memberlist)
 
 # db.team.insert_one(데이터)는 데이터를 team 데이터베이스에 저장한다는 뜻입니다
@@ -66,12 +65,13 @@ def members():
     db.team.insert_one(doc)
     return "", 204   #이건 성공/실패 코드입니다 api명세를 보면서 따라해주세요
 
-@app.route("/members/update", methods=["PUT"])
+@app.route("/member/update", methods=["PUT"])
 def member_update():
-    member_id = request.args.get('memberid')
+    print(request.get_json())
+    member_id = request.get_json()["memberid"]
     name_receive = request.get_json()["name"]
     img_receive = request.get_json()["img"]
-    db.team.insert_one({"id":member_id},{"$set":{{"name": name_receive, "img": img_receive}}})
+    db.team.insert_one({"id":member_id},{"$set":{"name": name_receive, "img": img_receive}})
     return "", 204
 
 

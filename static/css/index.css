@@ -1,8 +1,9 @@
 * {
   font-family: "Nanum Gothic", sans-serif;
   font-family: "Noto Serif KR", serif;
+  box-sizing: border-box;
 }
-body {
+html {
   height: 100vh;
 }
 
@@ -31,9 +32,9 @@ body {
 
 .body-container {
   width: 990px;
-  margin-left: auto;
-  margin-right: auto;
+  height: 100%;
   text-align: center;
+  margin: 0 auto 40px auto;
 }
 
 .introduce {
@@ -71,7 +72,7 @@ body {
 }
 
 .text-area {
-  box-shadow: 0 0 5px #333;
+  border: 1px solid rgba(51, 51, 51, 0.541);
   border-radius: 3px;
   padding: 20px;
   text-align: center;
@@ -110,6 +111,10 @@ body {
 .team-container {
   width: 1000px;
   margin: auto;
+}
+
+.team-container > .team {
+  margin: 0 5px 20px 5px;
 }
 .mainteam-container {
   width: 800px;
