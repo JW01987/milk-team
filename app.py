@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient, DESCENDING
 import uuid
 import certifi
-from bson.objectid import ObjectId
 from datetime import datetime, timezone, timedelta
 
 ca = certifi.where()
@@ -55,19 +54,29 @@ def members():
     name_receive = request.get_json()["name"]
     img_receive = request.get_json()["img"]
     comment_receive = request.get_json()["comment"]
-    doc = {"id":id_receive,"name": name_receive, "img": img_receive,"comment":comment_receive}
+    doc = {
+        "id": id_receive,
+        "name": name_receive,
+        "img": img_receive,
+        "comment": comment_receive,
+    }
     db.team.insert_one(doc)
-    return "", 204   
+    return "", 204
+
 
 @app.route("/member/update", methods=["PUT"])
 def member_update():
-    #member_id = request.get_json()["memberid"]
+    # member_id = request.get_json()["memberid"]
     name_receive = request.get_json()["name"]
     img_receive = request.get_json()["img"]
     comment_receive = request.get_json()["comment"]
-    #result = db.team.update_one({"id":member_id},{"$set":{"name":name_receive,"img":img_receive,"comment":comment_receive}})
-    result = db.team.update_one({"name":name_receive},{"$set":{"img":img_receive,"comment":comment_receive}})
+    # result = db.team.update_one({"id":member_id},{"$set":{"name":name_receive,"img":img_receive,"comment":comment_receive}})
+    result = db.team.update_one(
+        {"name": name_receive},
+        {"$set": {"img": img_receive, "comment": comment_receive}},
+    )
     return "", 204
+
 
 @app.route("/member/delete", methods=["DELETE"])
 def member_del():
@@ -128,15 +137,11 @@ def get_comments_with_id(member_id):
 def post_comments_with_id(member_id):
     data = {}
     for key, value in request.form.items():
-        if key == "member_id":
+        if key == "member_id":  # formData에 들어간 member_id가 str로 담기므로 제외함
             continue
         data[key] = value
     data["member_id"] = member_id
     db.comments.insert_one(data)
-    # nick_name = request.form["nick_name"]
-    # comment = request.form["comment"]
-    # data = {"member_id": member_id, "nick_name": nick_name, "comment": comment}
-    # db.comments.insert_one(data)
 
     return jsonify({"msg": "방명록 작성 완료!"})
 
@@ -153,7 +158,7 @@ def post_comments():
     comment = request.form["comment"]
 
     # 현재시각을 변수로 지정합니다.
-    # 저는 코멘트 POST요청을 받으면 현재시각을 생성하여 데이터베이스에 넣도록 했습니다.
+    # 코멘트 POST요청을 받으면 현재시각을 생성하여 데이터베이스에 넣도록 했습니다.
     kst = timezone(timedelta(hours=9))
     now = datetime.now(tz=kst)  # 한국 기준 현재시각을 출력합니다.
 
@@ -170,48 +175,6 @@ def post_comments():
     db.comments.insert_one(post)
 
     return jsonify({"msg": "등록을 완료했습니다."})
-
-
-# # 개인 페이지 코멘트 GET API 입니다.
-# @app.route("/members/2/comments", methods=["GET"])
-# def get_comments():
-#     """페이지네이션을 구현합니다.
-#     - 쿼리로 page와 limit에 대한 정보를 받습니다.
-#     - page는 페이지네이션에서 현재 페이지를 의미합니다.
-#     - limit는 한 페이지당 보여줄 코멘트 수를 의미합니다.
-#     """
-#     page = int(request.args.get("page"))
-#     limit = int(request.args.get("limit"))
-#     limit = limit if limit <= 20 else 20  # limit는 20 이상을 부여할 수 없습니다.
-
-#     count = db.comments.count_documents({})
-
-#     # 페이지네이션 작동에 사용될 변수입니다.
-#     # 만약 현재 3페이지에 머물고 있다면 페이지네이션은 <1 2 3 4 5>까지만 보여집니다.
-#     # 만약 7페이지에 머물고 있다면 페이지네이션은 <6 7 8 9 10>까지만 보여집니다.
-#     page_set = 5  # 페이지네이션의 페이지 숫자를 5개 단위로 보여지도록 합니다.
-#     page_group_num = (page - 1) // page_set
-#     start_page = page_group_num * page_set + 1
-#     end_page = (page_group_num + 1) * page_set
-
-#     # MongoDB에서 코멘트 데이터 가져오기
-#     # skip과 limit 메소드를 사용하면 가져올 데이터의 범위를 설정할 수 있습니다.
-#     comments = list(
-#         db.comments.find({"member_id": 2}, {"_id": False})
-#         .skip((page - 1) * limit)
-#         .limit(limit)
-#     )
-
-#     # 페이지네이션 구현에 필요한 정보를 프론트에 전달합니다.
-#     return jsonify(
-#         {
-#             "count": count,
-#             "start_page": start_page,
-#             "end_page": end_page,
-#             "page_set": page_set,
-#             "comments": comments,
-#         }
-#     )
 
 
 if __name__ == "__main__":
