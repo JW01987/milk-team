@@ -2,7 +2,7 @@
   font-family: 'Nanum Gothic Coding', monospace;
 }
 
-.mypic {
+.header {
   width: 100%;
   background-image: linear-gradient(0deg,
       rgba(0, 0, 0, 0.5),
@@ -17,17 +17,27 @@
   align-items: center;
   justify-content: center;
 
-  /* padding-left: 50px; */
   padding: 50px 20px 50px 20px;
   margin-bottom: 30px;
 }
 
+a {
+  text-decoration: none;
+}
+
+.body {
+  background-image: url("../images/background_minyoung.jpg");
+  background-size: cover;
+  background-position: center bottom;
+}
 .body-container {
   display: flex;
   flex-direction: column;
   width:660px;
+  background-color:rgba(0, 0, 0, 0.05);
   margin-left: auto;
   margin-right: auto;
+  padding: 5px 10px 5px 10px
 }
 
 .introduce {
@@ -36,10 +46,7 @@
   float: left;
   width: 100%;
   height: 300px;
-  /* align-items: center; */
-  /* justify-content: center; */
 
-  /* padding-left: 50px; */
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 30px;
@@ -98,5 +105,5 @@
   flex-direction: row;
   align-items: left;
   justify-content: center;
-  padding: 50px 20px 30px 20px;
+  padding: 20px 20px 30px 20px;
 }
