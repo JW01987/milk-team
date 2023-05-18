@@ -54,8 +54,8 @@
       }
 
       .mypic {
-        background-image: url("https://www.nextdaily.co.kr/news/photo/202302/214974_315599_3458.jpg");
-        background-position: center;
+        background-image: url("/static/images/jowon.png");
+        background-position: center ;
         background-size: cover;
         border-radius: 3px;
         box-shadow: 0 0 5px #333;
@@ -72,7 +72,9 @@
         max-width: 800px;
         margin: 250px auto 20px auto;
         padding: 40px 20px 10px 20px;
-        background-color: #91acbe;
+        /* background-color: #91acbe; */
+        border: 10px solid #91acbe;
+        border-radius: 3px;
         text-align: center;
         box-shadow: 1px 0 6px #333;
       }
@@ -114,11 +116,9 @@
         margin-top: 20px;
       }
       .comment{
-        width: 95%;
-        max-width: 800px;
         margin: 10px auto 20px auto;
-        padding: 40px 20px 10px 20px;
-        text-align: center;
+        /* padding: 40px 20px 10px 20px; */
+      
       }
       .test{
         display: flex;
@@ -188,7 +188,9 @@
         말을 잘 들어줍니다<br>
         장난을 잘 칩니다<br>
       </p>
-      <a href="https://velog.io/@jw01987" target="_blank">제 벨로그에 놀러오세요</a>
+      <a style="margin-right:3px;" href="https://velog.io/@jw01987" target="_blank">Velog</a>
+      <a href="https://github.com/JW01987" target="_blank">Github</a>
+
     </div>
   
     <div class="hr-sect">감상평</div>
@@ -205,24 +207,7 @@
 
     </div>
     <div class="comment-list">
-    <div class="comment">
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet fugiat
-        numquam aperiam dolores, voluptatum quasi laboriosam, provident nemo
-        quis magni cum repudiandae similique mollitia ipsa asperiores illo
-        laborum porro debitis!
-      </p>
-      <h3>이름</h3>
-    </div>
-    <div class="comment">
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet fugiat
-        numquam aperiam dolores, voluptatum quasi laboriosam, provident nemo
-        quis magni cum repudiandae similique mollitia ipsa asperiores illo
-        laborum porro debitis!
-      </p>
-      <h3>이름</h3>
-    </div>
+
   </div>
   <script>
     function show_comment() {
@@ -233,12 +218,15 @@
             let name = a['nick_name']
             let comment = a['comment']
             let temp_html = 
-            ` <div class="comment">
-              <p>
-                ${comment}
-              </p>
-              <h3>${name}</h3>
-            </div>`
+            `<div class="card comment" style="width: 25rem;">
+                <div class="card-body">
+                  <h5 class="card-title">${name}</h5>
+                  <p class="card-text">${comment}</p>
+                  <button type="button" class="btn btn-outline-danger btn-sm">
+                    삭제
+                  </button>
+                </div>
+              </div>`
             $(".comment-list").append(temp_html)
           })
         })  

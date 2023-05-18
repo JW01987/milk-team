@@ -42,7 +42,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">감상평 남기기</h5>
+            <h5 class="modal-title" id="exampleModalLabel">팀원 추가하기</h5>
             <button
               type="button"
               class="btn-close"
@@ -69,6 +69,14 @@
               />
               <label for="floatingInput">이미지 주소</label>
             </div>
+            <div class="form-floating">
+              <textarea
+                class="form-control commentInput"
+                placeholder="Leave a comment here"
+                id="floatingTextarea"
+              ></textarea>
+              <label for="floatingTextarea"> 자기소게</label>
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -85,10 +93,72 @@
         </div>
       </div>
     </div>
+    <div
+      class="modal fade"
+      id="teamModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="teamModal">팀원 수정하기</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control updateName"
+                id="floatingInput modalName"
+                placeholder="name@example.com"
+                disabled
+              />
+              <!-- 현재 id먹통이라 안됨 -->
+              <label for="floatingInput">이름</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control updateImg"
+                id="floatingInput modalImg"
+                placeholder="name@example.com"
+              />
+              <label for="floatingInput">이미지 주소</label>
+            </div>
+            <div class="form-floating">
+              <textarea
+                class="form-control updateComment"
+                placeholder="Leave a comment here"
+                id="floatingTextarea"
+              ></textarea>
+              <label for="floatingTextarea">자기소개</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              닫기
+            </button>
+            <button type="button" class="btn btn-primary" id="updateSubmit">
+              등록하기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="header">
       <p>우유에 목마른 사람들</p>
       <h1 id="title">우유 먹고 싶다</h1>
-      <button type="button" class="btn btn-primary redirectTo">등록하기</button>
     </div>
     <div class="body-container">
       <div class="introduce">
@@ -132,7 +202,13 @@
           />
           <div class="card-body">
             <h5 class="card-title">김창범</h5>
-            <a href="#" class="btn btn-outline-dark">개인 페이지</a>
+            <div
+              href="#"
+              class="btn btn-outline-dark redirectTo"
+              data-name="changbum"
+            >
+              개인 페이지
+            </div>
           </div>
         </div>
 
@@ -144,7 +220,9 @@
           />
           <div class="card-body">
             <h5 class="card-title">박민영</h5>
-            <a href="#" class="btn btn-outline-dark">개인 페이지</a>
+            <div class="btn btn-outline-dark redirectTo" data-name="minyoung">
+              개인 페이지
+            </div>
           </div>
         </div>
 
@@ -156,7 +234,9 @@
           />
           <div class="card-body">
             <h5 class="card-title">박채원</h5>
-            <a href="#" class="btn btn-outline-dark">개인 페이지</a>
+            <div class="btn btn-outline-dark redirectTo" data-name="minyoung">
+              개인 페이지
+            </div>
           </div>
         </div>
 
@@ -164,7 +244,9 @@
           <img src="/static/images/jowon.png" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title">한조원</h5>
-            <a href="#" class="btn btn-outline-dark">개인 페이지</a>
+            <div class="btn btn-outline-dark redirectTo" data-name="jowon">
+              개인 페이지
+            </div>
           </div>
         </div>
       </div>
@@ -183,53 +265,112 @@
       <div class="team-container"></div>
     </div>
     <script>
-      window.onload = function () {
-        $(document).ready(function show_team() {
-          fetch("/memberlist", {
-            headers: { "Content-Type": "application/json" },
-            method: "GET",
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              $(".team-container").empty();
-              data.forEach((a) => {
-                let name = a["name"];
-                let img = a["img"];
-                let temp_html = `<div class="card team h-100" style="width: 18rem;">
-                  <img src="${img}" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">${name}</h5>
-                    <button class="btn btn-primary">수정</button>
-                    <button class="btn btn-primary">삭제</button>
-                  </div>
-                </div>`;
-                $(".team-container").append(temp_html);
-              });
+      const submit = document.querySelector("#submit");
+      const nameInput = document.querySelector(".nameinput");
+      const imgInput = document.querySelector(".imginput");
+      const commentInput = document.querySelector(".commentInput");
+
+      function removeMember(id) {
+        fetch(`/member/delete?memberid=${id}`, {
+          headers: { "Content-Type": "application/json" },
+          method: "DELETE",
+        }).then((res) => {
+          if (res.status == 204) window.location.reload();
+          else alert("에러발생");
+        });
+      }
+      $(document).ready(function show_team() {
+        fetch("/memberlist", {
+          headers: { "Content-Type": "application/json" },
+          method: "GET",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            $(".team-container").empty();
+            data.forEach((a) => {
+              let name = a["name"];
+              let img = a["img"];
+              let id = a["id"];
+              let comment = a["comment"];
+              let temp_html = `<div class="card team h-100" style="width: 18rem;">
+                <img src="${img}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">${name}</h5>
+                  <p class="card-text">${comment}</p>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#teamModal"
+                    onClick="updateModal(event)"
+                    data-id="'${id}'"
+                    data-img="${img}"
+                    data-name="${name}"
+                    data-comment="${comment}"
+                  >
+                    수정
+                  </button>
+                  <button class="btn btn-outline-danger" onClick="removeMember('${id}')">삭제</button>
+                </div>
+              </div>`;
+              $(".team-container").append(temp_html);
             });
-        });
-        const submit = document.querySelector("#submit");
-        const nameInput = document.querySelector(".nameinput");
-        const imgInput = document.querySelector(".imginput");
-
-        $(".redirectTo").on("click", function () {
-          window.location.href = "/jowon";
-        });
-
-        submit.addEventListener("click", (e) => {
-          let data = {
-            name: nameInput.value,
-            img: imgInput.value,
-          };
-          fetch("/members", {
-            headers: { "Content-Type": "application/json" },
-            method: "POST",
-            body: JSON.stringify(data),
-          }).then((res) => {
-            if (res.status == 204) window.location.reload();
-            else alert("에러발생");
           });
+      });
+
+      function updateModal(e) {
+        let id = e.target.dataset.id;
+        let img = e.target.dataset.img;
+        let name = e.target.dataset.name;
+        let comment = e.target.dataset.comment;
+
+        $(".updateName").val(name);
+        $(".updateImg").val(img);
+        $(".updateComment").val(comment);
+        $("#updateSubmit").data("id", id);
+      }
+      $("#updateSubmit").on("click", function (ev) {
+        let updateName = $(".updateName").val();
+        let updateImg = $(".updateImg").val();
+        let updateComment = $(".updateComment").val();
+        let updateId = $("#updateSubmit").data("id");
+        let data = {
+          name: updateName,
+          img: updateImg,
+          memberid: updateId,
+          comment: updateComment,
+        };
+        fetch("/member/update", {
+          headers: { "Content-Type": "application/json" },
+          method: "PUT",
+          body: JSON.stringify(data),
+        }).then((res) => {
+          if (res.status == 204) window.location.reload();
+          else alert("에러발생");
         });
-      };
+      });
+
+      $(".redirectTo").on("click", function (e) {
+        let name = e.target.dataset.name;
+        console.log(name);
+        window.location.href = `/${name}`;
+      });
+
+      submit.addEventListener("click", (e) => {
+        let data = {
+          name: nameInput.value,
+          img: imgInput.value,
+          comment: commentInput.value,
+        };
+        fetch("/members", {
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          body: JSON.stringify(data),
+        }).then((res) => {
+          if (res.status == 204) window.location.reload();
+          else alert("에러발생");
+        });
+      });
     </script>
   </body>
 </html>
