@@ -74,10 +74,9 @@ def delete_comments_with_id(member_id, comment_id):
 ```python
 @app.route("/members/<int:member_id>/comments", methods=["GET"])
 def get_comments_with_id(member_id):
-    if member_id != 2:
-        comments = list(db.comments.find({"member_id": member_id}))
-        for obj in comments:
-            obj["_id"] = str(obj["_id"])
+    comments = list(db.comments.find({"member_id": member_id}))
+    for obj in comments:
+        obj["_id"] = str(obj["_id"])
 ```
 
 ### 3. API 통합
@@ -90,7 +89,7 @@ def post_comments_with_id(member_id):
     password = request.form["password"]
     comment = request.form["comment"]
 
-		post = {
+    post = {
         "nick_name": nickname,
         "comment": comment,
         "password": password,
@@ -99,7 +98,7 @@ def post_comments_with_id(member_id):
 
     db.comments.insert_one(post)
 
-		return jsonify({"msg": "방명록 작성 완료!"})
+    return jsonify({"msg": "방명록 작성 완료!"})
 ```
 ```python
 # After
@@ -113,9 +112,9 @@ def post_comments_with_id(member_id):
             continue
         data[key] = value
 
-		db.comments.insert_one(data)
-		
-		return jsonify({"msg": "방명록 작성 완료!"})
+    db.comments.insert_one(data)
+
+    return jsonify({"msg": "방명록 작성 완료!"})
 ```
 
 ### 4. 댓글 업로드 시간 기록
