@@ -14,10 +14,11 @@
 - `팀 페이지`를 메인 페이지로 만들어 `개별 소개 페이지와 연동`
 - mongoDB `데이터베이스 통합`
 - 개별 소개 페이지의 `API 통합`
+- 배포 (http://www.우유먹고싶다.메인.한국)
   
 ---
 ## 사이트 구경하기
-
+- 시연 영상 (https://youtu.be/i08qF3R_GBk)
 ---
 ## 주요 기능 살펴보기
 > 수정 기능  
@@ -25,10 +26,11 @@
 ObjectId 타입 이슈  
 API 통합  
 댓글 업로드 시간 기록  
-댓글 입력 제한 
+댓글 입력 제한  
+페이지네이션
 
 
-### 수정 기능
+### 1. 수정 기능
 수정 기능은 `신규 생성 틀을 재활용`합니다.
 1. 수정하려는 데이터의 정보를 DB에서 가져온다.
 2. 신규 생성란에 가져온 값을 채운다.
@@ -55,7 +57,7 @@ def member_update():
     return "", 204
 ```
 
-### 삭제 기능
+### 2. 삭제 기능
 ```python
 from bson.objectid import ObjectId
 
@@ -78,14 +80,13 @@ def get_comments_with_id(member_id):
             obj["_id"] = str(obj["_id"])
 ```
 
-### API 통합
+### 3. API 통합
 - 개인 소개 페이지가 동일한 GET, POST API를 사용하도록 수정
-- 
 ```python
 # Before
 @app.route("/members/<int:member_id>/comments", methods=["POST"])
 def post_comments_with_id(member_id):
-		nickname = request.form["nickname"]
+    nickname = request.form["nickname"]
     password = request.form["password"]
     comment = request.form["comment"]
 
@@ -117,15 +118,15 @@ def post_comments_with_id(member_id):
 		return jsonify({"msg": "방명록 작성 완료!"})
 ```
 
-### 댓글 업로드 시간 기록
+### 4. 댓글 업로드 시간 기록
 - 매 댓글이 등록될 때 마다 접수된 시간을 함께 기록
 ```python
 from datetime import datetime, timezone, timedelta
 
 kst = timezone(timedelta(hours=9))
-    now = datetime.now(tz=kst)  # 한국 기준 현재시각을 출력합니다.
-    data["upload_time"] = now
-    db.comments.insert_one(data)
+now = datetime.now(tz=kst)  # 한국 기준 현재시각을 출력합니다.
+data["upload_time"] = now
+db.comments.insert_one(data)
 
 '''
 mongoDB insert
@@ -155,7 +156,7 @@ function dateFormatter(dateString) {
 >`TIP`  
 자바스크립트의 new Date 객체를 통해 문자열 시간 데이터를 받을 경우 시간이 변동될 수 있습니다. 이를 예뱅하기 위해 KST 설정이 필요합니다.
 
-### 댓글 입력 제한
+### 5. 댓글 입력 제한
 `inputChecker` 함수를 통해 빈칸 입력을 방지합니다.
 ```javascript
 let formData = new FormData();
@@ -186,4 +187,5 @@ function inputChecker(target, content) {
 - 각자 만든 GET, POST Flask API를 하나로 합치는 과정
 
 ## 정리
-매 순간순간이 새로운 도전이었고, 배운 것을 그대로 써먹는 것에서 더 나아가 프로그램을 구현하는 과정을 학습할 수 있는 시간이었고, 무엇보다 Github으로 협업을 경험할 수 있어서 개발자가 된 마냥 뿌듯했다.
+매 순간순간이 새로운 도전이었고, 배운 것을 그대로 써먹는 것에서 더 나아가 프로그램을 구현하는 과정을 경험하는 시간이 좋았다.  
+무엇보다 Github으로 협업을 경험할 수 있어서 개발자가 된 마냥 뿌듯했다.
