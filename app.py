@@ -81,7 +81,7 @@ def member_update():
             }
         },
     )
-    print(result)
+
     return "", 204
 
 
